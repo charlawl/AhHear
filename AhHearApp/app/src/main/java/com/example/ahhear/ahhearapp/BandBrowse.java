@@ -7,6 +7,6 @@ public class BandBrowse extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.browse);
+        setContentView(R.layout.band_browse);
     }
 }
