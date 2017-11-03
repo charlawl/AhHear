@@ -9,74 +9,81 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".PickLocation">
+        <activity
+            android:name=".PickLocation"
+            android:parentActivityName="com.example.ahhear.ahhearapp.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".Record">
+        <activity
+            android:name=".Record"
+            android:parentActivityName="com.example.ahhear.ahhearapp.PickLocation" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".BandBrowse">
+        <activity
+            android:name=".BandBrowse"
+            android:parentActivityName="com.example.ahhear.ahhearapp.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".VenueBrowse">
+        <activity
+            android:name=".VenueBrowse"
+            android:parentActivityName="com.example.ahhear.ahhearapp.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".BandScore">
+        <activity
+            android:name=".BandScore"
+            android:parentActivityName="com.example.ahhear.ahhearapp.BandBrowse" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".VenueScore">
+        <activity
+            android:name=".VenueScore"
+            android:parentActivityName="com.example.ahhear.ahhearapp.VenueBrowse" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".BandVenueHeatmap">
+        <activity
+            android:name=".BandVenueHeatmap">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".VenueHeatmap">
+        <activity
+            android:name=".VenueHeatmap">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
