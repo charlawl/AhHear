@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <ImageView
+        android:id="@+id/venueImage"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/venueName"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/venueImage"
+        android:layout_alignTop="@+id/venueImage"
+        android:layout_gravity="center"
+        android:layout_toEndOf="@+id/venueImage"
+        android:contentDescription="@string/venues"
+        android:text="Venue Name"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:layout_width="125dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/venueName"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/decibels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/numSamples"
+            android:layout_toEndOf="@+id/venueName"
+            android:text="decibels" />
+
+        <TextView
+            android:id="@+id/gigs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/venueName"
+            android:layout_toEndOf="@+id/venueName"
+            android:text="gigs" />
+
+        <TextView
+            android:id="@+id/numSamples"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/venueName"
+            android:layout_alignBottom="@+id/venueName"
+            android:layout_toEndOf="@+id/venueName"
+            android:text="Samples" />
+    </LinearLayout>
+</android.widget.LinearLayout>

@@ -4,5 +4,10 @@
     <string name="bands">Bands</string>
     <string name="venues">Venues</string>
     <string name="record">Record</string>
+    <string name="decibelsAvg">Avg:%1ddb </string>
+    <string name="samples">%1dSamples</string>
+    <string name="gigs">%1dGigs</string>
+
+
 
 </resources>
