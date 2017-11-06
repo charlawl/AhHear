@@ -1,5 +1,7 @@
 package ViewComponents;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by charlottehearne on 05/11/2017.
  */
@@ -7,14 +9,17 @@ package ViewComponents;
 public class Venue {
 
     String name;
-    int numGigs, numSamples, decibels;
+    int id, numGigs, numSamples, decibels;
 
-    public Venue(String name, int numGigs, int numSamples, int decibels) {
+    public Venue(int id, String name, int numGigs, int numSamples, int decibels) {
+        this.id = id;
         this.name = name;
         this.numGigs = numGigs;
         this.numSamples = numSamples;
         this.decibels = decibels;
     }
+
+    public int getId(){ return id;}
 
     public String getVenueName() {
         return name;
@@ -31,4 +36,5 @@ public class Venue {
     public int getDecibels() {
         return decibels;
     }
+
 }

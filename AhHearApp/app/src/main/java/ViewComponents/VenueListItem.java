@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ahhear.ahhearapp.R;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -34,7 +37,6 @@ public class VenueListItem extends ArrayAdapter<Venue> {
     public View getView(int position, View convertView, ViewGroup parent){
         View v = convertView;
         Venue venue = getItem(position);
-
         ViewHolder viewHolder;
         final View result;
 
@@ -56,12 +58,23 @@ public class VenueListItem extends ArrayAdapter<Venue> {
             result = convertView;
         }
 
+
         Resources res = getContext().getResources();
         viewHolder.venueNameView.setText(venue.getVenueName());
         viewHolder.numGigsView.setText(res.getString(R.string.gigs, venue.getNumGigs()));
         viewHolder.numSampelesView.setText(res.getString(R.string.samples, venue.getNumSamples()));
         viewHolder.decibelsView.setText(res.getString(R.string.decibelsAvg, venue.getDecibels()));
-//        viewHolder.venueImgView.setImageDrawable(venue.getName());
+
+        DownloadVenueImage downloadVenueImage = new DownloadVenueImage(viewHolder.venueImgView);
+
+        try {
+            downloadVenueImage.execute(new URL("http", "10.0.2.2", 8000, "images?id="+venue.getId()));
+        } catch (MalformedURLException e) {
+            Toast toasterr = Toast.makeText(getContext(), "Error occurred", Toast.LENGTH_SHORT);
+            toasterr.show();
+            e.printStackTrace();
+        }
+
 
         return convertView;
     }
