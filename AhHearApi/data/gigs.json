@@ -1,0 +1,470 @@
+[
+ {
+   "date": "05-11-2017",
+   "time": "20:00",
+   "band": "Kiasmos",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "06-11-2017",
+   "time": "18:30",
+   "band": "Little Mix",
+   "venue": "3Arena"
+ },
+ {
+   "date": "06-11-2017",
+   "time": "20:00",
+   "band": "Zola Jesus",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "07-11-2017",
+   "time": "18:30",
+   "band": "Picture This",
+   "venue": "3Arena"
+ },
+ {
+   "date": "07-11-2017",
+   "time": "20:00",
+   "band": "Sam Amidon",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "08-11-2017",
+   "time": "18:30",
+   "band": "Picture This",
+   "venue": "3Arena"
+ },
+ {
+   "date": "08-11-2017",
+   "time": "19:00",
+   "band": "Alice Cooper",
+   "venue": "The Olympia Theatre"
+ },
+ {
+   "date": "09-11-2017",
+   "time": "19:00",
+   "band": "Alice Cooper",
+   "venue": "The Olympia Theatre"
+ },
+ {
+   "date": "09-11-2017",
+   "time": "19:30",
+   "band": "Gordi",
+   "venue": "The Button Factory"
+ },
+ {
+   "date": "09-11-2017",
+   "time": "20:00",
+   "band": "Julien Baker",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "10-11-2017",
+   "time": "20:00",
+   "band": "The Cadillac Three",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "11-11-2017",
+   "time": "19:30",
+   "band": "God Is An Astronaut",
+   "venue": "The Button Factory"
+ },
+ {
+   "date": "11-11-2017",
+   "time": "20:00",
+   "band": "Lucy Rose",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "11-11-2017",
+   "time": "23:00",
+   "band": "Cyril Hahn",
+   "venue": "The Button Factory"
+ },
+ {
+   "date": "12-11-2017",
+   "time": "20:00",
+   "band": "Milky Chance",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "13-11-2017",
+   "time": "18:30",
+   "band": "Steps",
+   "venue": "3Arena"
+ },
+ {
+   "date": "15-11-2017",
+   "time": "18:30",
+   "band": "Depeche Mode",
+   "venue": "3Arena"
+ },
+ {
+   "date": "16-11-2017",
+   "time": "18:30",
+   "band": "The Killers",
+   "venue": "3Arena"
+ },
+ {
+   "date": "16-11-2017",
+   "time": "19:00",
+   "band": "Brand New",
+   "venue": "The Olympia Theatre"
+ },
+ {
+   "date": "17-11-2017",
+   "time": "19:00",
+   "band": "Camille O'Sullivan",
+   "venue": "The Olympia Theatre"
+ },
+ {
+   "date": "17-11-2017",
+   "time": "20:00",
+   "band": "Columbia Mills",
+   "venue": "The Button Factory"
+ },
+ {
+   "date": "18-11-2017",
+   "time": "19:00",
+   "band": "Opeth",
+   "venue": "The Academy"
+ },
+ {
+   "date": "18-11-2017",
+   "time": "20:00",
+   "band": "Blue Hawaii",
+   "venue": "The Workman's Club"
+ },
+ {
+   "date": "18-11-2017",
+   "time": "20:00",
+   "band": "Protomartyr",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "19-11-2017",
+   "time": "19:30",
+   "band": "Morgan James",
+   "venue": "The Sugar Club"
+ },
+ {
+   "date": "19-11-2017",
+   "time": "20:00",
+   "band": "Stu Larsen",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "20-11-2017",
+   "time": "19:30",
+   "band": "Wolf Parade",
+   "venue": "The Button Factory"
+ },
+ {
+   "date": "20-11-2017",
+   "time": "20:00",
+   "band": "Nelly",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "21-11-2017",
+   "time": "18:30",
+   "band": "James Arthur",
+   "venue": "3Arena"
+ },
+ {
+   "date": "21-11-2017",
+   "time": "20:00",
+   "band": "TOPS",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "21-11-2017",
+   "time": "20:00",
+   "band": "Nelly",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "22-11-2017",
+   "time": "20:00",
+   "band": "Mac Demarco",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "24-11-2017",
+   "time": "18:30",
+   "band": "Queens Of The Stone Age",
+   "venue": "3Arena"
+ },
+ {
+   "date": "24-11-2017",
+   "time": "19:00",
+   "band": "Shed Seven",
+   "venue": "The Olympia Theatre"
+ },
+ {
+   "date": "25-11-2017",
+   "time": "18:30",
+   "band": "Queen & Adam Lambert",
+   "venue": "3Arena"
+ },
+ {
+   "date": "25-11-2017",
+   "time": "19:30",
+   "band": "Songhoy Blues",
+   "venue": "The Button Factory"
+ },
+ {
+   "date": "25-11-2017",
+   "time": "20:00",
+   "band": "Kim Churchill",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "25-11-2017",
+   "time": "20:00",
+   "band": "Bitch Falcon",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "25-11-2017",
+   "time": "20:00",
+   "band": "Rhiannon Giddens",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "26-11-2017",
+   "time": "18:30",
+   "band": "Royal Blood",
+   "venue": "3Arena"
+ },
+ {
+   "date": "26-11-2017",
+   "time": "20:00",
+   "band": "Paul Brady",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "27-11-2017",
+   "time": "18:30",
+   "band": "James Blunt",
+   "venue": "3Arena"
+ },
+ {
+   "date": "27-11-2017",
+   "time": "20:00",
+   "band": "Paul Brady",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "28-11-2017",
+   "time": "18:30",
+   "band": "Kasabian",
+   "venue": "3Arena"
+ },
+ {
+   "date": "28-11-2017",
+   "time": "19:00",
+   "band": "Wolf Alice",
+   "venue": "The Olympia Theatre"
+ },
+ {
+   "date": "28-11-2017",
+   "time": "20:00",
+   "band": "Sun Kil Moon",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "29-11-2017",
+   "time": "19:00",
+   "band": "Hoodie Allen",
+   "venue": "The Academy"
+ },
+ {
+   "date": "30-11-2017",
+   "time": "18:30",
+   "band": "Bryson Tiller",
+   "venue": "3Arena"
+ },
+ {
+   "date": "01-12-2017",
+   "time": "19:00",
+   "band": "Peter Hook and The Light",
+   "venue": "The Academy"
+ },
+ {
+   "date": "01-12-2017",
+   "time": "19:30",
+   "band": "Fujiya & Miyagi",
+   "venue": "The Button Factory"
+ },
+ {
+   "date": "01-12-2017",
+   "time": "20:00",
+   "band": "Wild Front",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "02-12-2017",
+   "time": "19:30",
+   "band": "Destroyer",
+   "venue": "The Button Factory"
+ },
+ {
+   "date": "06-12-2017",
+   "time": "20:00",
+   "band": "Jesca Hoop",
+   "venue": "The Workman's Club"
+ },
+ {
+   "date": "06-12-2017",
+   "time": "20:00",
+   "band": "Bernard Fanning",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "07-12-2017",
+   "time": "20:00",
+   "band": "Josh Ritter and The Royal City Band",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "08-12-2017",
+   "time": "18:30",
+   "band": "Andre Rieu",
+   "venue": "3Arena"
+ },
+ {
+   "date": "08-12-2017",
+   "time": "20:00",
+   "band": "Josh Ritter and The Royal City Band",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "09-12-2017",
+   "time": "18:30",
+   "band": "Andre Rieu",
+   "venue": "3Arena"
+ },
+ {
+   "date": "11-12-2017",
+   "time": "19:00",
+   "band": "Bay City Rollers",
+   "venue": "The Olympia Theatre"
+ },
+ {
+   "date": "11-12-2017",
+   "time": "20:00",
+   "band": "Christy Moore",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "12-12-2017",
+   "time": "20:00",
+   "band": "Christy Moore",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "15-12-2017",
+   "time": "20:00",
+   "band": "Happy Mondays",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "16-12-2017",
+   "time": "19:30",
+   "band": "The Eskies",
+   "venue": "The Button Factory"
+ },
+ {
+   "date": "17-12-2017",
+   "time": "20:00",
+   "band": "Glen Hansard",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "18-12-2017",
+   "time": "20:00",
+   "band": "Glen Hansard",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "19-12-2017",
+   "time": "20:00",
+   "band": "Christy Moore",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "20-12-2017",
+   "time": "20:00",
+   "band": "Christy Moore",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "21-12-2017",
+   "time": "20:00",
+   "band": "The Strypes",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "21-12-2017",
+   "time": "20:00",
+   "band": "The Strypes",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "22-12-2017",
+   "time": "13:00",
+   "band": "The Strypes",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "22-12-2017",
+   "time": "18:30",
+   "band": "Imelda May",
+   "venue": "3Arena"
+ },
+ {
+   "date": "22-12-2017",
+   "time": "20:00",
+   "band": "Damien Dempsey",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "22-12-2017",
+   "time": "20:00",
+   "band": "The Strypes",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "22-12-2017",
+   "time": "20:00",
+   "band": "The Strypes",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "23-12-2017",
+   "time": "20:00",
+   "band": "Damien Dempsey",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "27-12-2017",
+   "time": "20:00",
+   "band": "Aslan",
+   "venue": "Vicar Street"
+ },
+ {
+   "date": "27-12-2017",
+   "time": "20:00",
+   "band": "Paddy Casey",
+   "venue": "Whelan's"
+ },
+ {
+   "date": "29-12-2017",
+   "time": "20:00",
+   "band": "Aslan",
+   "venue": "Vicar Street"
+ }
+]

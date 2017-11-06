@@ -1,0 +1,45 @@
+[
+ {
+   "name": "Whelan's",
+   "lat": 53.336785,
+   "long": -6.265715
+ },
+ {
+   "name": "The Olympia Theatre",
+   "lat": 53.344498,
+   "long": -6.266144
+ },
+ {
+   "name": "3Arena",
+   "lat": 53.347663,
+   "long": -6.228508
+ },
+ {
+   "name": "The Button Factory",
+   "lat": 53.345145,
+   "long": -6.264512
+ },
+ {
+   "name": "Vicar Street",
+   "lat": 53.342799,
+   "long": -6.277983
+ },
+
+ {
+   "name": "The Academy",
+   "lat": 53.3480297,
+   "long": -6.2641921
+ },
+
+  {
+   "name": "The Workman's Club",
+   "lat": 53.3453465,
+   "long": -6.2686013
+ },
+
+  {
+   "name": "The Sugar Club",
+   "lat": 53.335558,
+   "long": -6.258697
+ }
+]
