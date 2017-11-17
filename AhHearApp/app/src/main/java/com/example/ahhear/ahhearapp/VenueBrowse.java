@@ -1,9 +1,12 @@
 package com.example.ahhear.ahhearapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,15 +32,18 @@ public class VenueBrowse extends AppCompatActivity {
     ArrayList<Venue> venues;
     ListView listView;
     private static VenueListItem listItem;
+    ArrayList<Venue> result = new ArrayList<>();
 
     private class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
         private Activity activity;
-        public DownloadVenuesTask(Activity activity){
+
+        public DownloadVenuesTask(Activity activity) {
             this.activity = activity;
         }
+
         protected ArrayList<Venue> doInBackground(URL... urls) {
             int count = urls.length;
-            ArrayList<Venue> result = new ArrayList<>();
+
 
             for (URL url : urls) {
                 try {
@@ -55,7 +61,7 @@ public class VenueBrowse extends AppCompatActivity {
 
                     try {
                         JSONArray arr = new JSONArray(sb.toString());
-                        for(int i = 0; i < arr.length(); i++){
+                        for (int i = 0; i < arr.length(); i++) {
                             JSONObject venue = arr.getJSONObject(i);
                             result.add(new Venue(
                                     venue.getInt("id"),
@@ -84,7 +90,6 @@ public class VenueBrowse extends AppCompatActivity {
 
             listItem = new VenueListItem(result, getApplicationContext());
             listView.setAdapter(listItem);
-
         }
     }
 
@@ -106,8 +111,19 @@ public class VenueBrowse extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        // Code to open the venue score page after clicking one of the list view items
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Intent myIntent = new Intent(view.getContext(), VenueScore.class);
+                myIntent.putExtra("venueId", result.get(position).getId());
+                myIntent.putExtra("venueName", result.get(position).getVenueName());
+                myIntent.putExtra("venueNumGigs", result.get(position).getNumGigs());
+                myIntent.putExtra("venueNumSamples", result.get(position).getNumSamples());
+                myIntent.putExtra("venueDecibels", result.get(position).getDecibels());
+                startActivityForResult(myIntent, 0);
 
-
+            }
+        });
     }
-
 }
