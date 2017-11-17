@@ -58,7 +58,6 @@ public class VenueListItem extends ArrayAdapter<Venue> {
             result = convertView;
         }
 
-
         Resources res = getContext().getResources();
         viewHolder.venueNameView.setText(venue.getVenueName());
         viewHolder.numGigsView.setText(res.getString(R.string.gigs, venue.getNumGigs()));
@@ -74,7 +73,6 @@ public class VenueListItem extends ArrayAdapter<Venue> {
             toasterr.show();
             e.printStackTrace();
         }
-
 
         return convertView;
     }
