@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mZoomLinearLayout"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/heatmap_container"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/floorplan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/vicar_street_floor_plan"/>
+
+        <ca.hss.heatmaplib.HeatMap
+            android:id="@+id/heatmap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:maxOpacity="255"
+            app:minOpacity="0"/>
+
+    </RelativeLayout>
 </LinearLayout>
