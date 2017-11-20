@@ -23,7 +23,7 @@ with open('data/venues.csv', 'rt', encoding='utf-8') as file:
 
 with open('data/bands.csv', 'rt', encoding='utf-8') as file:
 	for line in file:
-		_id, name = line.strip().split(',')
+		_id, name, img = line.strip().split(',')
 		band = Band(name=name)
 		session.add(band)
 
