@@ -22,7 +22,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
-
 import ca.hss.heatmaplib.HeatMap;
 
 
@@ -31,15 +30,19 @@ public class VenueHeatmap extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private class DownloadHeatData extends AsyncTask<URL, Integer, double[][]> {
 
+        // record this activity as a variable for later.
+        // used to get the width of the screen for the heatmap.
         private Activity activity;
 
         private DownloadHeatData(Activity activity) {
             this.activity = activity;
         }
 
+        // downloading the data has to be done asynchronous.
+        // this is robbed from charlotte's venue menu.
         protected double[][] doInBackground(URL... urls) {
 
-            double[][]ReturnArray = new double[11][22];
+            double[][] ReturnArray = new double[10][10];
 
             for (URL url : urls) {
                 try {
@@ -56,6 +59,9 @@ public class VenueHeatmap extends AppCompatActivity {
                     }
 
                     try {
+
+                        // the data comes down as a string
+                        // is parsed as json and added to a 2darray of doubles.
                         JSONArray arr = new JSONArray(sb.toString());
                         for (int j = 0; j < arr.length(); j++) {
                             JSONArray temp = arr.getJSONArray(j);
@@ -79,6 +85,8 @@ public class VenueHeatmap extends AppCompatActivity {
             return ReturnArray;
         }
 
+        // when the asynchronous download is finished this runs.
+        // displays the heatmap.
         protected void onPostExecute(double[][] ReturnArray) {
 
             Toast toast = Toast.makeText(getApplicationContext(), "HeatData Downloaded", Toast.LENGTH_SHORT);
@@ -89,24 +97,6 @@ public class VenueHeatmap extends AppCompatActivity {
             HeatMap heatMap = findViewById(R.id.heatmap);
             heatMap.setMinimum(0.0);
             heatMap.setMaximum(100.0);
-
-            // Make the colour gradient from green / yellow / red.
-            Map<Float, Integer> colorStops = new ArrayMap<>();
-            colorStops.put(0.0f, 0xff00ff00);
-            colorStops.put(0.5f, 0xffffff00);
-            colorStops.put(1.0f, 0xffff0000);
-            heatMap.setColorStops(colorStops);
-            heatMap.setRadius(500);
-
-            for (int i = 0; i < ReturnArray.length; i++) {
-                for (int j = 0; j < ReturnArray[i].length; j++) {
-                    Float x = (float) i / 20;
-                    Float y = (float) j / 20;
-
-                    HeatMap.DataPoint point = new HeatMap.DataPoint(x, y, ReturnArray[i][j]);
-                    heatMap.addData(point);
-                }
-            }
 
             // get the width of the current screen.
             DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -121,8 +111,29 @@ public class VenueHeatmap extends AppCompatActivity {
             // now set the heatmap Relative Layout container height.
             RelativeLayout rl = findViewById(R.id.heatmap_container);
             rl.getLayoutParams().height = heatmap_height;
+
+
+            // Make the colour gradient from green / yellow / red.
+            Map<Float, Integer> colorStops = new ArrayMap<>();
+            colorStops.put(0.0f, 0xff00ff00);
+            colorStops.put(0.5f, 0xffffff00);
+            colorStops.put(1.0f, 0xffff0000);
+            heatMap.setColorStops(colorStops);
+            heatMap.setRadius(900);
+
+            for (int i = 0; i < ReturnArray.length; i++) {
+                for (int j = 0; j < ReturnArray[i].length; j++) {
+
+                    float x = (float) i / ReturnArray[i].length + .05f;
+                    float y = (float) j / ReturnArray.length + .05f;
+
+                    HeatMap.DataPoint point = new HeatMap.DataPoint(x, y, ReturnArray[i][j]);
+                    heatMap.addData(point);
+                }
+            }
         }
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,14 +142,14 @@ public class VenueHeatmap extends AppCompatActivity {
         DownloadHeatData downloadHeatData = new DownloadHeatData(this);
         try {
 
+            // this is the url to the API.
+            // Static at the moment but its easy to add which gig were looking at.
             Uri.Builder builder = new Uri.Builder();
-
             builder.scheme("http");
             builder.encodedAuthority("10.0.2.2:8000");
             builder.appendPath("heatmap");
-            builder.appendQueryParameter("gig_id","2");
+            builder.appendQueryParameter("gig_id","1");
             builder.build();
-
             downloadHeatData.execute(new URL(builder.toString()));
 
         } catch (MalformedURLException e) {
@@ -149,17 +160,3 @@ public class VenueHeatmap extends AppCompatActivity {
 
     }
 }
-
-//        double[][] multi = new double[][]{
-//                { 25.0, 0.0, 0, 0, 0, 0, 0, 0, 0, 0, 50.0, 25.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50.0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 80.0, 78.0 },
-//                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 80.0, 78.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 80.0, 78.0 },
-//                { 75.0, 0, 0, 0, 0, 0, 0, 0, 0, 86.0, 74.0 }
-//        };
