@@ -44,7 +44,6 @@ public class VenueBrowse extends AppCompatActivity {
         protected ArrayList<Venue> doInBackground(URL... urls) {
             int count = urls.length;
 
-
             for (URL url : urls) {
                 try {
                     URLConnection urlConnection = url.openConnection();

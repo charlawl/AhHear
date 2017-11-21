@@ -41,6 +41,5 @@ public class VenueScore extends AppCompatActivity{
             toasterr.show();
             e.printStackTrace();
         }
-
     }
 }
