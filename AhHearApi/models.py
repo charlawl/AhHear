@@ -30,6 +30,7 @@ class Gig(Base):
 	venue = relationship('Venue', back_populates='gigs')
 	band_id = Column(Integer, ForeignKey('band.id'))
 	band = relationship('Band', back_populates='gigs')
+	heatmaps = relationship("Heatmap", back_populates="gig")
 
 
 class Sample(Base):
@@ -37,3 +38,11 @@ class Sample(Base):
 	id = Column(Integer, primary_key=True)
 	timestamp = Column(Integer)
 	decibels = Column(Integer)
+
+
+class Heatmap(Base):
+	__tablename__ = 'heatmap'
+	id = Column(Integer, primary_key=True)
+	heatmap_array = Column(String)
+	gig_id = Column(Integer, ForeignKey('gig.id'))
+	gig = relationship('Gig', back_populates='heatmaps')
