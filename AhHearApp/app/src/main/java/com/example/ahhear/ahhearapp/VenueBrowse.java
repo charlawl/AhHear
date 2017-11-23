@@ -34,7 +34,7 @@ public class VenueBrowse extends AppCompatActivity {
     private static VenueListItem listItem;
     ArrayList<Venue> result = new ArrayList<>();
 
-    private class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
+    class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
         private Activity activity;
 
         public DownloadVenuesTask(Activity activity) {
