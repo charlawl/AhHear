@@ -39,6 +39,7 @@ with open('data/gigs.csv', 'rt', encoding='utf-8') as file:
 		session.add(gig)
 
 json_file = 'data/heatmaps.json'
+
 heatmaps = json.load(open(json_file))
 for i in heatmaps:
 	heatmap_array = str(i['heatmap_array'])
