@@ -1,6 +1,9 @@
 package com.example.ahhear.ahhearapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +23,8 @@ import java.util.TimerTask;
 
 public class PickLocation extends AppCompatActivity {
     public static final String EXTRA_DECIBEL = "com.example.ahhear.MESSAGE";
+    public static final String EXTRA_WIDTH = "com.example.ahhear.WIDTH";
+    public static final String EXTRA_HEIGHT = "com.example.ahhear.HEIGHT";
     private Button mRecordButton;
     private TextView mRecordLabel;
     private TextView mDecibels;
@@ -29,6 +34,8 @@ public class PickLocation extends AppCompatActivity {
     private Timer timer = new Timer();
     private static final String LOG_TAG = "Record Log";
     final Handler handler = new Handler();
+    private float chosen_percent_width;
+    public float chosen_percent_height;
 
 
     @Override
@@ -36,7 +43,7 @@ public class PickLocation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pick_location);
 //        set dynamic image // uses picasso for better memory management
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        ImageView imageView = (ImageView) findViewById(R.id.floorplan);
 
         Picasso.with(this)
                 .load("https://s8.postimg.org/iqy8i4nsl/transparent_floorplan.png")
@@ -63,6 +70,9 @@ public class PickLocation extends AppCompatActivity {
                 return false;
             }
         });
+
+        imageView.setDrawingCacheEnabled(true);
+        imageView.setOnTouchListener(addPin);
     }
 
     private void startRecording() {
@@ -83,9 +93,13 @@ public class PickLocation extends AppCompatActivity {
         timer.scheduleAtFixedRate(new RecorderTask(handler), 0, 1000);
 
     }
+
     private void stopRecording() {
         intent = new Intent(this, DisplayLevel.class);
         intent.putExtra(EXTRA_DECIBEL, Double.toString(Math.round(amplitudeDb)));
+        intent.putExtra(EXTRA_WIDTH, chosen_percent_width);
+        intent.putExtra(EXTRA_HEIGHT, chosen_percent_height);
+
         timer.cancel();
         mRecorder.stop();
         mRecorder.reset();
@@ -114,5 +128,67 @@ public class PickLocation extends AppCompatActivity {
             });
         }
     }
+
+    private final View.OnTouchListener addPin = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(final View v, MotionEvent event) {
+
+            Bitmap bmp = Bitmap.createBitmap(v.getDrawingCache());
+            int color = 0;
+            try {
+                color = bmp.getPixel((int) event.getX(), (int) event.getY());
+            } catch (Exception e) {
+                // e.printStackTrace();
+            }
+            if (color == Color.TRANSPARENT)
+                return false;
+            else {
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        float x = event.getX();
+                        float y = event.getY();
+
+                        String uri = "@drawable/red_pin";
+                        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                        ImageView pinview = (ImageView) findViewById(R.id.pin);
+                        ImageView floorplanview = (ImageView) findViewById(R.id.floorplan);
+
+                        float floorplan_width = floorplanview.getMeasuredHeight();
+                        float floorplan_height = floorplanview.getMeasuredWidth();
+                        float pin_width = pinview.getMeasuredHeight();
+                        float pin_height = pinview.getMeasuredHeight();
+
+                        chosen_percent_width = (x*100)/floorplan_width;
+                        chosen_percent_height = (y*100)/floorplan_height;
+
+                        System.out.println(chosen_percent_width);
+                        System.out.println(chosen_percent_height);
+
+
+
+                        if(pinview.getDrawable() == null) {
+
+                            Drawable res = getResources().getDrawable(imageResource);
+                            pinview.setAdjustViewBounds(true);
+                            pinview.setImageDrawable(res);
+                        }
+
+                        pinview.setX(x - ((pin_width / 100) * 26));
+                        pinview.setY(y-((pin_height / 100) * 86));
+
+                        break;
+
+                    default:
+                        break;
+                }
+                return true;
+
+            }
+        }
+    };
+
 
 }
