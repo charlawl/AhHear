@@ -3,52 +3,46 @@
 import hug
 import sqlalchemy
 from sqlalchemy import create_engine, func
-from models import Base, Venue, Gig, Band, Heatmap
+from models import Base, Venue, Gig, Band, Recording
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 import os
 import json
+import datetime
 
-engine = create_engine('sqlite:///:memory:', echo=False)
+engine = create_engine('sqlite:///ahhere.db', echo=False)
 Session = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
 
-session = Session()
 
-with open('data/venues.csv', 'rt', encoding='utf-8') as file:
-	for line in file:
-		_id, name, lat, lng, img = line.strip().split(',')
-		# print(img)
-		venue = Venue(name=name, location_lat=lat, location_lng=lng, img=img)
-		session.add(venue)
+# Following code populates the database with the csv files.
+# session = Session()
+# with open('data/bands.csv', 'rt', encoding='utf-8') as file:
+# 	for line in file:
+# 		_id, name, img = line.strip().split(',')
+# 		band = Band(name=name, img=img)
+# 		session.add(band)
 
-with open('data/bands.csv', 'rt', encoding='utf-8') as file:
-	for line in file:
-		_id, name, img = line.strip().split(',')
-		band = Band(name=name)
-		session.add(band)
+# with open('data/venues.csv', 'rt', encoding='utf-8') as file:
+# 	for line in file:
+# 		_id, name, lat, lng, img = line.strip().split(',')
+# 		venue = Venue(name=name, location_lat=lat, location_lng=lng, img=img)
+# 		session.add(venue)
 
-with open('data/gigs.csv', 'rt', encoding='utf-8') as file:
-	for line in file:
-		date, time, band, venue = line.split(',')
-		gig = Gig(date=date, time=time)
-		venue = session.query(Venue).get(int(venue) + 1)
-		band = session.query(Band).get(int(band) + 1)
-		venue.gigs.append(gig)
-		band.gigs.append(gig)
-		session.add(gig)
+# with open('data/gigs.csv', 'rt', encoding='utf-8') as file:
+# 	for line in file:
+# 		inputdatetime, band, venue = line.split(',')
+# 		parsed_datetime = datetime.datetime.strptime(inputdatetime, '%d-%m-%Y %H:%M')
+# 		bandsearch = session.query(Band).filter_by(name = band).first()
+# 		gig = Gig(datetime=parsed_datetime, band_id=bandsearch.id, venue_id=venue)
+# 		session.add(gig)
 
-json_file = 'data/heatmaps.json'
-
-heatmaps = json.load(open(json_file))
-for i in heatmaps:
-	heatmap_array = str(i['heatmap_array'])
-	gig_id = i['gig_id']
-	heatmap = Heatmap(gig_id=gig_id, heatmap_array=heatmap_array)
-	band = session.query(Gig).get(int(gig_id))
-	session.add(heatmap)
-
-session.commit()
+# with open('data/recordings.csv', 'rt', encoding='utf-8') as file:
+# 	for line in file:
+# 		gig_id, spl, xpercent, ypercent = line.split(',')
+# 		recording = Recording(spl=spl, xpercent=xpercent, ypercent=ypercent, gig_id=gig_id)
+# 		session.add(recording)
+# session.commit()
 
 @contextmanager
 def session_scope():
@@ -62,14 +56,41 @@ def session_scope():
 	finally:
 		session.close()
 
-# this endpoint is a hack and we need to resolve how to do this properly.
-# talk to charlotte about the structure of sqlalchemy models.
-# http://localhost:8000/heatmap?gig_id=1
-@hug.get('/heatmap', output=hug.output_format.pretty_json)
-def heatmap(gig_id):
+@hug.get('/bands', output=hug.output_format.pretty_json)
+def venues():
+	with session_scope() as session:
+		result = session.query(Band.name, Band.img).all()
+		return result
+
+@hug.get('/venues', output=hug.output_format.pretty_json)
+def venues():
+	with session_scope() as session:
+		result = session.query(Venue.name, Venue.location_lat, Venue.location_lng, Venue.img).all()
+		return result
+
+@hug.get('/gigs', output=hug.output_format.pretty_json)
+def gigs():
 	session = Session()
-	heatmap = session.query(Heatmap).get(gig_id)
-	return json.loads(heatmap.heatmap_array)
+	return session.query(Gig.datetime, Band.name, Band.img, Venue.name, Venue.img, Venue.location_lat, Venue.location_lng).join(Venue,Band).all()
+
+@hug.get('/recordings', output=hug.output_format.pretty_json)
+def recordings():
+	session = Session()
+	return session.query(Recording.spl, Recording.xpercent, Recording.ypercent, Gig.datetime, Band.name, Venue.name).join(Gig, Band, Venue).all()
+
+@hug.get('/input_recording', output=hug.output_format.pretty_json)
+def input_recording(spl:float, xpercent:float, ypercent:float, gig_id:int):
+	session = Session()
+	recording = Recording(spl=spl, xpercent=xpercent, ypercent=ypercent, gig_id=gig_id)
+	session.add(recording)
+	session.commit()
+	return True
+
+@hug.get('/images', output=hug.output_format.file)
+def images(id:int):
+	with session_scope() as session:
+		venue = session.query(Venue).get(id)
+		return os.path.join('data', 'images',f'{venue.img}')
 
 @hug.get('/venues_list', output=hug.output_format.pretty_json)
 def venues_list():
@@ -84,22 +105,4 @@ def venues_list():
 
 							   ).join(Gig).group_by(Venue.id)
 		return [item._asdict() for item in result]
-
-@hug.get('/bands', output=hug.output_format.pretty_json)
-def bands():
-	session = Session()
-	return session.query(Band.name)
-
-@hug.get('/gigs', output=hug.output_format.pretty_json)
-def gigs():
-	session = Session()
-	return session.query(Gig.date, Gig.time, Venue.name, Band.name).join(Venue,Band)
-
-@hug.get('/images', output=hug.output_format.file)
-def images(id:int):
-	with session_scope() as session:
-		venue = session.query(Venue).get(id)
-		# print(venue.img)
-		return os.path.join('data', 'images',f'{venue.img}')
-
 
