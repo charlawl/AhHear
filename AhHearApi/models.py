@@ -7,9 +7,9 @@ Base = declarative_base()
 class Band(Base):
 	__tablename__ = 'band'
 	id = Column(Integer, primary_key=True)
+
 	name = Column(String, nullable=False)
 	img = Column(String, nullable=False)
-
 	gigs = relationship('Gig', back_populates='band')
 
 class Venue(Base):
@@ -30,8 +30,6 @@ class Gig(Base):
 
 	band_id = Column(Integer, ForeignKey('band.id'))
 	band = relationship('Band', back_populates='gigs')
-	# recordings = relationship("Recording")
-
 	recordings = relationship('Recording', back_populates='gig')
 
 class Recording(Base):
@@ -41,6 +39,5 @@ class Recording(Base):
 	xpercent = Column(Float, nullable=False)
 	ypercent = Column(Float, nullable=False)
 	# gig_id = Column(Integer, ForeignKey('gig.id'))
-
 	gig_id = Column(Integer, ForeignKey('gig.id'))
 	gig = relationship('Gig', back_populates='recordings')
