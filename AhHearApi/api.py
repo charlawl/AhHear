@@ -99,13 +99,6 @@ def recordings():
 	session = Session()
 	return session.query(Recording.spl, Recording.xpercent, Recording.ypercent, Gig.datetime, Band.name, Venue.name).join(Gig, Band, Venue).all()
 
-@hug.get('/input_recording', output=hug.output_format.pretty_json)
-def input_recording(spl:float, xpercent:float, ypercent:float, gig_id:int):
-	session = Session()
-	recording = Recording(spl=spl, xpercent=xpercent, ypercent=ypercent, gig_id=gig_id)
-	session.add(recording)
-	session.commit()
-	return True
 
 @hug.get('/venue_image', output=hug.output_format.file)
 def venue_image(id:int):
@@ -119,11 +112,16 @@ def band_image(id:int):
 		band = session.query(Band).get(id)
 		return get_image(band)
 
-@hug.post('/sample_reading')
-def sample_reading(data):
-	with session_scope() as session:
-		sample = Sample(timestamp=data['timestamp'], gig=session.query(Gig).get(data['gig']))
-		session.add(sample)
-		session.commit()
-  
+@hug.post('/input_recording')
+def sample_reading(body):
 
+	with session_scope() as session:
+
+		recording = Recording(spl=body["spl"], xpercent=body["xpercent"], ypercent=body["ypercent"], gig_id=body["gig_id"])
+		session.add(recording)
+		session.commit()
+
+	return {'status': 'posted!'}
+
+
+  

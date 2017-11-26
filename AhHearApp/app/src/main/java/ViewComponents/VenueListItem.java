@@ -59,7 +59,7 @@ public class VenueListItem extends ArrayAdapter<Venue> {
         }
 
         Resources res = getContext().getResources();
-        viewHolder.venueNameView.setText(venue.getVenueName());
+        viewHolder.venueNameView.setText(venue.getName());
         viewHolder.numGigsView.setText(res.getString(R.string.gigs, venue.getNumGigs()));
         viewHolder.numSampelesView.setText(res.getString(R.string.samples, venue.getNumSamples()));
         viewHolder.decibelsView.setText(res.getString(R.string.decibelsAvg, venue.getDecibels()));

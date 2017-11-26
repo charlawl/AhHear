@@ -60,7 +60,7 @@ public class BandListItem extends ArrayAdapter<Band> {
 
 
         Resources res = getContext().getResources();
-        viewHolder.bandNameView.setText(band.getBandName());
+        viewHolder.bandNameView.setText(band.getName());
         viewHolder.numGigsView.setText(res.getString(R.string.gigs, band.getNumGigs()));
         viewHolder.numSampelesView.setText(res.getString(R.string.samples, band.getNumSamples()));
         viewHolder.decibelsView.setText(res.getString(R.string.decibelsAvg, band.getDecibels()));

@@ -64,12 +64,17 @@ public class VenueBrowse extends AppCompatActivity {
                             int numGigs = venue.isNull("num_gigs")? 0: venue.getInt("num_gigs");
                             int numSamples = venue.isNull("num_samples")? 0: venue.getInt("num_samples");
                             int avgSamples = venue.isNull("avg_samples")? 0: venue.getInt("avg_samples");
+                            double locationLng = venue.isNull("location_lng")? 0: venue.getDouble("location_lng");
+                            double locationLat = venue.isNull("location_lat")? 0: venue.getDouble("location_lat");
+
                             result.add(new Venue(
                                     venue.getInt("id"),
                                     venue.getString("name"),
                                     numGigs,
                                     numSamples,
-                                    avgSamples
+                                    avgSamples,
+                                    locationLng,
+                                    locationLat
                             ));
                         }
                     } catch (JSONException e) {
@@ -118,7 +123,7 @@ public class VenueBrowse extends AppCompatActivity {
                                     int position, long id) {
                 Intent myIntent = new Intent(view.getContext(), VenueScore.class);
                 myIntent.putExtra("venueId", result.get(position).getId());
-                myIntent.putExtra("venueName", result.get(position).getVenueName());
+                myIntent.putExtra("venueName", result.get(position).getName());
                 myIntent.putExtra("venueNumGigs", result.get(position).getNumGigs());
                 myIntent.putExtra("venueNumSamples", result.get(position).getNumSamples());
                 myIntent.putExtra("venueDecibels", result.get(position).getDecibels());
