@@ -109,7 +109,7 @@ public class VenueBrowse extends AppCompatActivity {
 
         try {
             downloadVenuesTask.execute(
-                    new URL("http", "10.0.2.2", 8000, "venues_list"));
+                    new URL("http", "gavs.work", 8000, "venues_list"));
 
         } catch (MalformedURLException e) {
             Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);

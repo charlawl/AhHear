@@ -106,7 +106,7 @@ public class BandBrowse extends AppCompatActivity {
 
         try {
             downloadBandsTask.execute(
-                    new URL("http", "10.0.2.2", 8000, "bands_list"));
+                    new URL("http", "gavs.work", 8000, "bands_list"));
 
         } catch (MalformedURLException e) {
             Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
