@@ -3,48 +3,47 @@
 import hug
 import sqlalchemy
 from sqlalchemy import create_engine, func
-from models import Base, Venue, Gig, Band, Sample
+from models import Base, Venue, Gig, Band, Recording
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 import random
 import time
 import os
+import json
+import datetime
 
-engine = create_engine('sqlite:///:memory:', echo=False)
+engine = create_engine('sqlite:///ahhere.db', echo=False)
 Session = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
 
-session = Session()
+# Following code populates the database with the csv files.
+# session = Session()
+# with open('data/bands.csv', 'rt', encoding='utf-8') as file:
+# 	for line in file:
+# 		_id, name, img = line.strip().split(',')
+# 		band = Band(name=name, img=img)
+# 		session.add(band)
 
-with open('data/venues.csv', 'rt', encoding='utf-8') as file:
-	for line in file:
-		_id, name, lat, lng, img = line.strip().split(',')
-		venue = Venue(name=name, location_lat=lat, location_lng=lng, img=img)
-		session.add(venue)
+# with open('data/venues.csv', 'rt', encoding='utf-8') as file:
+# 	for line in file:
+# 		_id, name, lat, lng, img = line.strip().split(',')
+# 		venue = Venue(name=name, location_lat=lat, location_lng=lng, img=img)
+# 		session.add(venue)
 
-with open('data/bands.csv', 'rt', encoding='utf-8') as file:
-	for line in file:
-		_id, name, img = line.strip().split(',')
-		band = Band(name=name, img=img)
-		session.add(band)
+# with open('data/gigs.csv', 'rt', encoding='utf-8') as file:
+# 	for line in file:
+# 		inputdatetime, band, venue = line.split(',')
+# 		parsed_datetime = datetime.datetime.strptime(inputdatetime, '%d-%m-%Y %H:%M')
+# 		bandsearch = session.query(Band).filter_by(name = band).first()
+# 		gig = Gig(datetime=parsed_datetime, band_id=bandsearch.id, venue_id=venue)
+# 		session.add(gig)
 
-with open('data/gigs.csv', 'rt', encoding='utf-8') as file:
-	for line in file:
-		date, time, band, venue = line.split(',')
-		gig = Gig(date=date, time=time)
-		venue = session.query(Venue).get(int(venue) + 1)
-		band = session.query(Band).get(int(band) + 1)
-		venue.gigs.append(gig)
-		band.gigs.append(gig)
-		session.add(gig)
-
-with open('data/samples.csv', 'rt', encoding='utf-8') as file:
-	for line in file:
-		time, decibels, gig = line.split(',')
-		gig = session.query(Gig).get(int(gig))
-		gig.samples.append(Sample(decibels=decibels, timestamp=time))
-
-session.commit() 
+# with open('data/recordings.csv', 'rt', encoding='utf-8') as file:
+# 	for line in file:
+# 		gig_id, spl, xpercent, ypercent = line.split(',')
+# 		recording = Recording(spl=spl, xpercent=xpercent, ypercent=ypercent, gig_id=gig_id)
+# 		session.add(recording)
+# session.commit()
 
 @contextmanager
 def session_scope():
@@ -85,8 +84,6 @@ def venues_list():
 	with session_scope() as session:
 		return get_list_item(Venue)
 		
-								
-
 @hug.get('/bands_list', output=hug.output_format.pretty_json)
 def bands_list():
 	session = Session()
@@ -95,7 +92,20 @@ def bands_list():
 @hug.get('/gigs', output=hug.output_format.pretty_json)
 def gigs():
 	session = Session()
-	return session.query(Gig.date, Gig.time, Venue.name, Band.name).join(Venue,Band)
+	return session.query(Gig.datetime, Band.name, Band.img, Venue.name, Venue.img, Venue.location_lat, Venue.location_lng).join(Venue,Band).all()
+
+@hug.get('/recordings', output=hug.output_format.pretty_json)
+def recordings():
+	session = Session()
+	return session.query(Recording.spl, Recording.xpercent, Recording.ypercent, Gig.datetime, Band.name, Venue.name).join(Gig, Band, Venue).all()
+
+@hug.get('/input_recording', output=hug.output_format.pretty_json)
+def input_recording(spl:float, xpercent:float, ypercent:float, gig_id:int):
+	session = Session()
+	recording = Recording(spl=spl, xpercent=xpercent, ypercent=ypercent, gig_id=gig_id)
+	session.add(recording)
+	session.commit()
+	return True
 
 @hug.get('/venue_image', output=hug.output_format.file)
 def venue_image(id:int):
@@ -115,8 +125,5 @@ def sample_reading(data):
 		sample = Sample(timestamp=data['timestamp'], gig=session.query(Gig).get(data['gig']))
 		session.add(sample)
 		session.commit()
-
-
-
-
+  
 

@@ -17,6 +17,7 @@
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/venueImage"
+        android:textColor="#ffffff"
         android:layout_alignTop="@+id/venueImage"
         android:layout_gravity="center"
         android:layout_toEndOf="@+id/venueImage"
@@ -35,6 +36,7 @@
             android:id="@+id/decibels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:layout_below="@+id/numSamples"
             android:layout_toEndOf="@+id/venueName"
             android:text="decibels" />
@@ -43,6 +45,7 @@
             android:id="@+id/gigs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:layout_alignBottom="@+id/venueName"
             android:layout_toEndOf="@+id/venueName"
             android:text="gigs" />
@@ -51,6 +54,7 @@
             android:id="@+id/numSamples"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:layout_alignBaseline="@+id/venueName"
             android:layout_alignBottom="@+id/venueName"
             android:layout_toEndOf="@+id/venueName"
