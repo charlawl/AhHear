@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +20,11 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class PickLocation extends AppCompatActivity {
     public static final String EXTRA_DECIBEL = "com.example.ahhear.MESSAGE";
@@ -32,18 +36,20 @@ public class PickLocation extends AppCompatActivity {
     private MediaRecorder mRecorder;
     private double amplitudeDb;
     private Intent intent;
-    private Timer timer = new Timer();
+    private Timer timer;
     private static final String LOG_TAG = "Record Log";
     final Handler handler = new Handler();
     private float chosen_percent_width;
     public float chosen_percent_height;
     public LocalDataBaseManager localDataBaseManager;
+    private int gigId;
 
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.pick_location);
 //        set dynamic image // uses picasso for better memory management
         ImageView imageView = (ImageView) findViewById(R.id.floorplan);
@@ -66,7 +72,7 @@ public class PickLocation extends AppCompatActivity {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     startRecording();
                     mRecordLabel.setText(R.string.start_record);
-                }else if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP){
                     mRecordLabel.setText(R.string.stop_record);
                     stopRecording();
                 }
@@ -93,13 +99,15 @@ public class PickLocation extends AppCompatActivity {
             Log.e(LOG_TAG, "prepare() failed");
         }
         mRecorder.start();
+
+        timer = new Timer();
         timer.scheduleAtFixedRate(new RecorderTask(handler), 0, 1000);
 
     }
 
     private void stopRecording() {
         intent = new Intent(this, DisplayLevel.class);
-        intent.putExtra(EXTRA_DECIBEL, Double.toString(Math.round(amplitudeDb)));
+        intent.putExtra(EXTRA_DECIBEL, amplitudeDb);
         intent.putExtra(EXTRA_WIDTH, chosen_percent_width);
         intent.putExtra(EXTRA_HEIGHT, chosen_percent_height);
 
@@ -110,6 +118,7 @@ public class PickLocation extends AppCompatActivity {
         mRecorder = null;
         localDataBaseManager = new LocalDataBaseManager(this, "", null, 1);
         localDataBaseManager.insert_gig_recording("Cold Play", "Olympia", (int) Math.round(amplitudeDb));
+
         startActivity(intent);
     }
 
@@ -133,6 +142,9 @@ public class PickLocation extends AppCompatActivity {
             });
         }
     }
+
+
+
 
     private final View.OnTouchListener addPin = new View.OnTouchListener() {
 
