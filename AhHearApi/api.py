@@ -89,7 +89,7 @@ def sample_reading(body):
 
 	with session_scope() as session:
 
-		recording = Recording(spl=body["spl"], xpercent=body["xpercent"], ypercent=body["ypercent"], gig_id=data["gig_id"])
+		recording = Recording(spl=body["spl"], xpercent=body["xpercent"], ypercent=body["ypercent"], gig_id=body["gig_id"])
 		session.add(recording)
 		session.commit()
 
