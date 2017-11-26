@@ -1,5 +1,6 @@
 package com.example.ahhear.ahhearapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -36,8 +37,10 @@ public class PickLocation extends AppCompatActivity {
     final Handler handler = new Handler();
     private float chosen_percent_width;
     public float chosen_percent_height;
+    public LocalDataBaseManager localDataBaseManager;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +108,8 @@ public class PickLocation extends AppCompatActivity {
         mRecorder.reset();
         mRecorder.release();
         mRecorder = null;
+        localDataBaseManager = new LocalDataBaseManager(this, "", null, 1);
+        localDataBaseManager.insert_gig_recording("Cold Play", "Olympia", (int) Math.round(amplitudeDb));
         startActivity(intent);
     }
 
@@ -118,11 +123,11 @@ public class PickLocation extends AppCompatActivity {
         public void run() {
             int amplitude = mRecorder.getMaxAmplitude();
             amplitudeDb = 20 * Math.log10((double)Math.abs(amplitude));
-            Log.e("----------->>>>>>>>>>","MicInfoService amplitude: " + amplitudeDb);
+//            Log.e("----------->>>>>>>>>>","MicInfoService amplitude: " + amplitudeDb);
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("------------------*********_____________------------------");
+//                    System.out.println("------------------*********_____________------------------");
                     mDecibels.setText(String.format("Amplitude : %s", amplitudeDb));
                 }
             });
