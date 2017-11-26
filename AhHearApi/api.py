@@ -3,9 +3,11 @@
 import hug
 import sqlalchemy
 from sqlalchemy import create_engine, func
-from models import Base, Venue, Gig, Band
+from models import Base, Venue, Gig, Band, Sample
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
+import random
+import time
 import os
 
 engine = create_engine('sqlite:///:memory:', echo=False)
@@ -17,14 +19,13 @@ session = Session()
 with open('data/venues.csv', 'rt', encoding='utf-8') as file:
 	for line in file:
 		_id, name, lat, lng, img = line.strip().split(',')
-		print(img)
 		venue = Venue(name=name, location_lat=lat, location_lng=lng, img=img)
 		session.add(venue)
 
 with open('data/bands.csv', 'rt', encoding='utf-8') as file:
 	for line in file:
-		_id, name = line.strip().split(',')
-		band = Band(name=name)
+		_id, name, img = line.strip().split(',')
+		band = Band(name=name, img=img)
 		session.add(band)
 
 with open('data/gigs.csv', 'rt', encoding='utf-8') as file:
@@ -36,6 +37,12 @@ with open('data/gigs.csv', 'rt', encoding='utf-8') as file:
 		venue.gigs.append(gig)
 		band.gigs.append(gig)
 		session.add(gig)
+
+with open('data/samples.csv', 'rt', encoding='utf-8') as file:
+	for line in file:
+		time, decibels, gig = line.split(',')
+		gig = session.query(Gig).get(int(gig))
+		gig.samples.append(Sample(decibels=decibels, timestamp=time))
 
 session.commit() 
 
@@ -51,35 +58,65 @@ def session_scope():
 	finally:
 		session.close()
 
+def get_list_item(cls):
+	query_a = session.query(cls.id.label('id'),
+							   cls.name,
+							   cls.img,
+							   func.count(Sample.id).label('num_samples'),
+							   func.avg(Sample.decibels).label('avg_samples')).outerjoin(Gig, Sample).group_by(cls.id).subquery()
+
+	query_b = session.query(cls.id.label('id'),
+							func.count(Gig.id).label('num_gigs')).outerjoin(Gig).group_by(cls.id).subquery()
+
+	final_query = session.query(query_a.c.id,
+								query_a.c.name,
+								query_a.c.img,
+								query_a.c.num_samples,
+								query_a.c.avg_samples,
+								query_b.c.num_gigs).outerjoin(query_b, query_a.c.id==query_b.c.id).all()
+
+	return [row._asdict() for row in final_query]
+
+def get_image(item):
+	return os.path.join('data', 'images',f'{item.img}')
+
 @hug.get('/venues_list', output=hug.output_format.pretty_json)
 def venues_list():
 	with session_scope() as session:
-		result = session.query(Venue.id, 
-							   Venue.name,
-							   Venue.img,
-							   func.count(Venue.gigs),
-							   sqlalchemy.sql.expression.literal_column("0").label("numGigs"),
-							   sqlalchemy.sql.expression.literal_column("0").label("numSamples"),
-							   sqlalchemy.sql.expression.literal_column("0").label("decibels")
+		return get_list_item(Venue)
+		
+								
 
-							   ).join(Gig).group_by(Venue.id)
-		return [item._asdict() for item in result]
-
-@hug.get('/bands', output=hug.output_format.pretty_json)
-def bands():
+@hug.get('/bands_list', output=hug.output_format.pretty_json)
+def bands_list():
 	session = Session()
-	return session.query(Band.name)
+	return get_list_item(Band)
 
 @hug.get('/gigs', output=hug.output_format.pretty_json)
 def gigs():
 	session = Session()
 	return session.query(Gig.date, Gig.time, Venue.name, Band.name).join(Venue,Band)
 
-@hug.get('/images', output=hug.output_format.file)
-def images(id:int):
+@hug.get('/venue_image', output=hug.output_format.file)
+def venue_image(id:int):
 	with session_scope() as session:
 		venue = session.query(Venue).get(id)
-		print(venue.img)
-		return os.path.join('data', 'images',f'{venue.img}')
+		return get_image(venue)
+
+@hug.get('/band_image', output=hug.output_format.file)
+def band_image(id:int):
+	with session_scope() as session:
+		band = session.query(Band).get(id)
+		return get_image(band)
+
+@hug.post('/sample_reading')
+def sample_reading(data):
+	with session_scope() as session:
+		sample = Sample(timestamp=data['timestamp'], gig=session.query(Gig).get(data['gig']))
+		session.add(sample)
+		session.commit()
+
+
+
 
 

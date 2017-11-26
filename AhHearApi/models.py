@@ -18,8 +18,8 @@ class Band(Base):
 	__tablename__ = 'band'
 	id = Column(Integer, primary_key=True)
 	name = Column(String)
+	img = Column(String)
 	gigs = relationship('Gig', back_populates='band')
-
 
 class Gig(Base):
 	__tablename__ = 'gig'
@@ -30,6 +30,7 @@ class Gig(Base):
 	venue = relationship('Venue', back_populates='gigs')
 	band_id = Column(Integer, ForeignKey('band.id'))
 	band = relationship('Band', back_populates='gigs')
+	samples =  relationship('Sample')
 
 
 class Sample(Base):
@@ -37,3 +38,4 @@ class Sample(Base):
 	id = Column(Integer, primary_key=True)
 	timestamp = Column(Integer)
 	decibels = Column(Integer)
+	gig = Column(Integer, ForeignKey('gig.id'))
