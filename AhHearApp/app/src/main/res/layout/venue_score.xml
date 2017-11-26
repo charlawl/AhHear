@@ -20,21 +20,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Venue Name" />
+        android:text="@string/venue_name" />
 
     <TextView
         android:id="@+id/venueGigCountVenueScorePage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Gig Count" />
+        android:text="@string/gig_count" />
 
     <TextView
         android:id="@+id/venueDbVenueScorePage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Avg / max dB" />
+        android:text="@string/avg_max_db" />
 
     <ListView
         android:id="@+id/venuesListVenueScorePage"
