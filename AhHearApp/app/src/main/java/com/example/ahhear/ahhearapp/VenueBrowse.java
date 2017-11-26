@@ -20,7 +20,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-import ViewComponents.DownloadVenueImage;
 import ViewComponents.Venue;
 import ViewComponents.VenueListItem;
 
@@ -57,12 +56,15 @@ public class VenueBrowse extends AppCompatActivity {
                         JSONArray arr = new JSONArray(sb.toString());
                         for(int i = 0; i < arr.length(); i++){
                             JSONObject venue = arr.getJSONObject(i);
+                            int numGigs = venue.isNull("num_gigs")? 0: venue.getInt("num_gigs");
+                            int numSamples = venue.isNull("num_samples")? 0: venue.getInt("num_samples");
+                            int avgSamples = venue.isNull("avg_samples")? 0: venue.getInt("avg_samples");
                             result.add(new Venue(
                                     venue.getInt("id"),
                                     venue.getString("name"),
-                                    venue.getInt("numGigs"),
-                                    venue.getInt("numSamples"),
-                                    venue.getInt("decibels")
+                                    numGigs,
+                                    numSamples,
+                                    avgSamples
                             ));
                         }
                     } catch (JSONException e) {
