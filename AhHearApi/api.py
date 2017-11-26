@@ -16,7 +16,7 @@ engine = create_engine('sqlite:///ahhere.db', echo=False)
 Session = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
 
-# Following code populates the database with the csv files.
+# # Following code populates the database with the csv files.
 # session = Session()
 # with open('data/bands.csv', 'rt', encoding='utf-8') as file:
 # 	for line in file:
@@ -58,21 +58,23 @@ def session_scope():
 		session.close()
 
 def get_list_item(cls):
-	query_a = session.query(cls.id.label('id'),
-							   cls.name,
-							   cls.img,
-							   func.count(Sample.id).label('num_samples'),
-							   func.avg(Sample.decibels).label('avg_samples')).outerjoin(Gig, Sample).group_by(cls.id).subquery()
 
-	query_b = session.query(cls.id.label('id'),
-							func.count(Gig.id).label('num_gigs')).outerjoin(Gig).group_by(cls.id).subquery()
+	with session_scope() as session:
+		query_a = session.query(cls.id.label('id'),
+								   cls.name,
+								   cls.img,
+								   func.count(Recording.id).label('num_samples'),
+								   func.avg(Recording.spl).label('avg_samples')).outerjoin(Gig, Recording).group_by(cls.id).subquery()
 
-	final_query = session.query(query_a.c.id,
-								query_a.c.name,
-								query_a.c.img,
-								query_a.c.num_samples,
-								query_a.c.avg_samples,
-								query_b.c.num_gigs).outerjoin(query_b, query_a.c.id==query_b.c.id).all()
+		query_b = session.query(cls.id.label('id'),
+								func.count(Gig.id).label('num_gigs')).outerjoin(Gig).group_by(cls.id).subquery()
+
+		final_query = session.query(query_a.c.id,
+									query_a.c.name,
+									query_a.c.img,
+									query_a.c.num_samples,
+									query_a.c.avg_samples,
+									query_b.c.num_gigs).outerjoin(query_b, query_a.c.id==query_b.c.id).all()
 
 	return [row._asdict() for row in final_query]
 
@@ -81,12 +83,10 @@ def get_image(item):
 
 @hug.get('/venues_list', output=hug.output_format.pretty_json)
 def venues_list():
-	with session_scope() as session:
-		return get_list_item(Venue)
+	return get_list_item(Venue)
 		
 @hug.get('/bands_list', output=hug.output_format.pretty_json)
 def bands_list():
-	session = Session()
 	return get_list_item(Band)
 
 @hug.get('/gigs', output=hug.output_format.pretty_json)
