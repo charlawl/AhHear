@@ -59,15 +59,15 @@ public class VenueListItem extends ArrayAdapter<Venue> {
         }
 
         Resources res = getContext().getResources();
-        viewHolder.venueNameView.setText(venue.getVenueName());
+        viewHolder.venueNameView.setText(venue.getName());
         viewHolder.numGigsView.setText(res.getString(R.string.gigs, venue.getNumGigs()));
         viewHolder.numSampelesView.setText(res.getString(R.string.samples, venue.getNumSamples()));
         viewHolder.decibelsView.setText(res.getString(R.string.decibelsAvg, venue.getDecibels()));
 
-        DownloadVenueImage downloadVenueImage = new DownloadVenueImage(viewHolder.venueImgView);
+        DownloadImage downloadVenueImage = new DownloadImage(viewHolder.venueImgView);
 
         try {
-            downloadVenueImage.execute(new URL("http", "10.0.2.2", 8000, "images?id="+venue.getId()));
+            downloadVenueImage.execute(new URL("http", "10.0.2.2", 8000, "venue_image?id="+venue.getId()));
         } catch (MalformedURLException e) {
             Toast toasterr = Toast.makeText(getContext(), "Error occurred", Toast.LENGTH_SHORT);
             toasterr.show();

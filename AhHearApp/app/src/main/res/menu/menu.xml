@@ -11,4 +11,7 @@
     <item
         android:id="@+id/menu_record_btn"
         android:title="@string/record" />
+    <item
+        android:id="@+id/menu_recordings_btn"
+        android:title="@string/my_recordings" />
 </menu>

@@ -25,10 +25,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-import ViewComponents.Band;
-import ViewComponents.DownloadVenueImage;
-import ViewComponents.Venue;
-import ViewComponents.VenueListItem;
+import ViewComponents.DownloadImage;
 
 public class VenueScore extends AppCompatActivity{
 
@@ -121,7 +118,7 @@ public class VenueScore extends AppCompatActivity{
         venueGigVenueScorePage.setText(getString(R.string.gigs, gigs));
         venueDbVenueScorePage.setText(getString(R.string.decibelsAvg, db));
 
-        DownloadVenueImage downloadVenueImage = new DownloadVenueImage((ImageView)findViewById(R.id.venueImageVenueScorePage));
+        DownloadImage downloadVenueImage = new DownloadImage((ImageView)findViewById(R.id.venueImageVenueScorePage));
 
         try {
             downloadVenueImage.execute(new URL("http", "10.0.2.2", 8000, "images?id="+id));

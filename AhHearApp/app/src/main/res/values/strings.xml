@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">AhHearApp</string>
-
     <string name="bands">Bands</string>
     <string name="venues">Venues</string>
     <string name="heatmap">Heatmap</string>
@@ -8,5 +7,12 @@
     <string name="decibelsAvg">Avg: %1d db </string>
     <string name="samples">%1d Samples</string>
     <string name="gigs">%1d Gigs</string>
+    <string name="stop_record">Stopped Recording!</string>
+    <string name="start_record">Recording &#8230;</string>
+    <string name="my_recordings">My Gigs</string>
+    <string name="welcome_to_the_browse_by_band_page">Welcome to the browse by band page!!!</string>
+    <string name="gig_count">Gig Count</string>
+    <string name="avg_max_db">Avg / max dB</string>
+    <string name="venue_name">Venue Name</string>
 
 </resources>
