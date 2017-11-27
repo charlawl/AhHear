@@ -146,7 +146,7 @@ public class VenueHeatmap extends AppCompatActivity {
             // Static at the moment but its easy to add which gig were looking at.
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http");
-            builder.encodedAuthority("10.0.2.2:8000");
+            builder.encodedAuthority("gavs.work:8000");
             builder.appendPath("heatmap");
             builder.appendQueryParameter("gig_id","1");
             builder.build();

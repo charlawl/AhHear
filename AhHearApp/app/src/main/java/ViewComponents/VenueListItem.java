@@ -67,7 +67,7 @@ public class VenueListItem extends ArrayAdapter<Venue> {
         DownloadImage downloadVenueImage = new DownloadImage(viewHolder.venueImgView);
 
         try {
-            downloadVenueImage.execute(new URL("http", "10.0.2.2", 8000, "venue_image?id="+venue.getId()));
+            downloadVenueImage.execute(new URL("http", "gavs.work", 8000, "venue_image?id="+venue.getId()));
         } catch (MalformedURLException e) {
             Toast toasterr = Toast.makeText(getContext(), "Error occurred", Toast.LENGTH_SHORT);
             toasterr.show();

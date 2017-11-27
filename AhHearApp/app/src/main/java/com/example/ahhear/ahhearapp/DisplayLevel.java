@@ -64,7 +64,7 @@ public class DisplayLevel extends AppCompatActivity {
 
                 try {
                     postSample.execute(
-                            new URL("http", "10.0.2.2", 8000, "input_recording"));
+                            new URL("http", "gavs.work", 8000, "input_recording"));
 
                 } catch (MalformedURLException e) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
