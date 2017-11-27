@@ -68,7 +68,7 @@ public class BandListItem extends ArrayAdapter<Band> {
         DownloadImage downloadBandImage = new DownloadImage(viewHolder.bandImgView);
 
         try {
-            downloadBandImage.execute(new URL("http", "10.0.2.2", 8000, "band_image?id="+band.getId()));
+            downloadBandImage.execute(new URL("http", "gavs.work", 8000, "band_image?id="+band.getId()));
         } catch (MalformedURLException e) {
             Toast toasterr = Toast.makeText(getContext(), "Error occurred", Toast.LENGTH_SHORT);
             toasterr.show();
