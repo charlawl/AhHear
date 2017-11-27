@@ -121,7 +121,7 @@ public class VenueScore extends AppCompatActivity{
         DownloadImage downloadVenueImage = new DownloadImage((ImageView)findViewById(R.id.venueImageVenueScorePage));
 
         try {
-            downloadVenueImage.execute(new URL("http", "10.0.2.2", 8000, "images?id="+id));
+            downloadVenueImage.execute(new URL("http", "gavs.work", 8000, "images?id="+id));
         } catch (MalformedURLException e) {
             Toast toasterr = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
             toasterr.show();
