@@ -50,9 +50,6 @@ def get_list_item(cls):
 
 	return [row._asdict() for row in final_query]
 
-def get_image(item):
-	return os.path.join('data','images',item.img)
-
 @hug.get('/venues_list', output=hug.output_format.pretty_json)
 def venues_list():
 	return get_list_item(Venue)
@@ -76,13 +73,13 @@ def recordings():
 def venue_image(id:int):
 	with session_scope() as session:
 		venue = session.query(Venue).get(id)
-		return get_image(venue)
+		return os.path.join('data','images',venue.img)
 
 @hug.get('/band_image', output=hug.output_format.file)
 def band_image(id:int):
 	with session_scope() as session:
 		band = session.query(Band).get(id)
-		return get_image(band)
+		return os.path.join('data','images', 'thumbnails' ,band.img + ".thumbnail")
 
 @hug.post('/input_recording')
 def sample_reading(body):
