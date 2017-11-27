@@ -58,6 +58,13 @@ def venues_list():
 def bands_list():
 	return get_list_item(Band)
 
+
+@hug.get('/gigsforvenue', output=hug.output_format.pretty_json)
+def gigs_for_venue(venue_name: hug.types.text):
+	session = Session()
+	return session.query(Gig.id, Band.name, Band.img, Venue.name).join(Gig,Venue,Band).filter(Venue.name==venue_name)
+
+
 @hug.get('/gigs', output=hug.output_format.pretty_json)
 def gigs(venue: int=None):
 	session = Session()

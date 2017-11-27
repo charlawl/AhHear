@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:orientation="vertical">
 
     <ImageView
@@ -19,6 +18,7 @@
         android:id="@+id/bandNameBandScorePage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:gravity="center"
         android:text="Band Name" />
 
@@ -26,6 +26,7 @@
         android:id="@+id/bandGigCountBandScorePage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:gravity="center"
         android:text="Gig Count" />
 
@@ -33,6 +34,7 @@
         android:id="@+id/bandDbBandScorePage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:gravity="center"
         android:text="Avg / max dB" />
 

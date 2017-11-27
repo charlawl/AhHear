@@ -139,9 +139,11 @@ public class VenueHeatmap extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        int gig_id = getIntent().getIntExtra("gigId", 0);
+        System.out.println("The gig ID is: " + gig_id);
+
         DownloadHeatData downloadHeatData = new DownloadHeatData(this);
         try {
-
             // this is the url to the API.
             // Static at the moment but its easy to add which gig were looking at.
             Uri.Builder builder = new Uri.Builder();

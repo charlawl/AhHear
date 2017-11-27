@@ -20,6 +20,7 @@
         android:layout_alignTop="@+id/bandImage"
         android:layout_gravity="center"
         android:layout_toEndOf="@+id/bandImage"
+        android:textColor="#ffffff"
         android:contentDescription="@string/bands"
         android:text="band Name"
         android:textAlignment="center" />
@@ -35,6 +36,7 @@
             android:id="@+id/decibels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:layout_below="@+id/numSamples"
             android:layout_toEndOf="@+id/bandName"
             android:text="decibels" />
@@ -43,6 +45,7 @@
             android:id="@+id/gigs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:layout_alignBottom="@+id/bandName"
             android:layout_toEndOf="@+id/bandName"
             android:text="gigs" />
@@ -51,6 +54,7 @@
             android:id="@+id/numSamples"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:layout_alignBaseline="@+id/bandName"
             android:layout_alignBottom="@+id/bandName"
             android:layout_toEndOf="@+id/bandName"
