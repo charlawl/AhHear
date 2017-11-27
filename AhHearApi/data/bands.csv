@@ -1,62 +1,249 @@
-0,The Killers,generic-band.jpg
-1,Camille O'Sullivan,generic-band.jpg
-2,Cyril Hahn,generic-band.jpg
-3,Queens Of The Stone Age,generic-band.jpg
-4,Peter Hook and The Light,generic-band.jpg
-5,Christy Moore,generic-band.jpg
-6,Aslan,generic-band.jpg
-7,Paddy Casey,generic-band.jpg
-8,Sun Kil Moon,generic-band.jpg
-9,Rhiannon Giddens,generic-band.jpg
-10,Wolf Parade,generic-band.jpg
-11,Destroyer,generic-band.jpg
-12,Happy Mondays,generic-band.jpg
-13,Damien Dempsey,generic-band.jpg
-14,Songhoy Blues,generic-band.jpg
-15,Opeth,generic-band.jpg
-16,Hoodie Allen,generic-band.jpg
-17,Depeche Mode,generic-band.jpg
-18,Royal Blood,generic-band.jpg
-19,The Eskies,generic-band.jpg
-20,Steps,generic-band.jpg
-21,Kiasmos,generic-band.jpg
-22,James Blunt,generic-band.jpg
-23,Mac Demarco,generic-band.jpg
-24,Fujiya & Miyagi,generic-band.jpg
-25,Zola Jesus,generic-band.jpg
-26,The Cadillac Three,generic-band.jpg
-27,Morgan James,generic-band.jpg
-28,Wolf Alice,generic-band.jpg
-29,Julien Baker,generic-band.jpg
-30,Nelly,generic-band.jpg
-31,James Arthur,generic-band.jpg
-32,Columbia Mills,generic-band.jpg
-33,TOPS,generic-band.jpg
-34,Imelda May,generic-band.jpg
-35,Kim Churchill,generic-band.jpg
-36,Little Mix,generic-band.jpg
-37,Lucy Rose,generic-band.jpg
-38,Milky Chance,generic-band.jpg
-39,Blue Hawaii,generic-band.jpg
-40,Bay City Rollers,generic-band.jpg
-41,Shed Seven,generic-band.jpg
-42,Picture This,generic-band.jpg
-43,The Strypes,generic-band.jpg
-44,Wild Front,generic-band.jpg
-45,Gordi,generic-band.jpg
-46,Glen Hansard,generic-band.jpg
-47,Bitch Falcon,generic-band.jpg
-48,Brand New,generic-band.jpg
-49,Jesca Hoop,generic-band.jpg
-50,Queen & Adam Lambert,generic-band.jpg
-51,Andre Rieu,generic-band.jpg
-52,Bryson Tiller,generic-band.jpg
-53,Protomartyr,generic-band.jpg
-54,Stu Larsen,generic-band.jpg
-55,Josh Ritter and The Royal City Band,generic-band.jpg
-56,Kasabian,generic-band.jpg
-57,Bernard Fanning,generic-band.jpg
-58,Sam Amidon,generic-band.jpg
-59,Alice Cooper,generic-band.jpg
-60,Paul Brady,generic-band.jpg
-61,God Is An Astronaut,generic-band.jpg
+id,name,img
+1,The Killers,TheKillers.jpeg
+2,Camille O'Sullivan,CamilleO'Sullivan.jpeg
+3,Cyril Hahn,CyrilHahn.jpeg
+4,Queens Of The Stone Age,QueensOfTheStoneAge.jpeg
+5,Peter Hook and The Light,PeterHookandTheLight.jpeg
+6,Christy Moore,ChristyMoore.jpeg
+7,Aslan,Aslan.jpeg
+8,Paddy Casey,PaddyCasey.jpeg
+9,Sun Kil Moon,SunKilMoon.jpeg
+10,Rhiannon Giddens,RhiannonGiddens.jpeg
+11,Wolf Parade,WolfParade.jpeg
+12,Destroyer,Destroyer.jpeg
+13,Happy Mondays,HappyMondays.jpeg
+14,Damien Dempsey,DamienDempsey.jpeg
+15,Songhoy Blues,SonghoyBlues.jpeg
+16,Opeth,Opeth.jpeg
+17,Hoodie Allen,HoodieAllen.jpeg
+18,Depeche Mode,DepecheMode.jpeg
+19,Royal Blood,RoyalBlood.jpeg
+20,The Eskies,TheEskies.jpeg
+21,Steps,Steps.jpeg
+22,Kiasmos,Kiasmos.jpeg
+23,James Blunt,JamesBlunt.jpeg
+24,Mac Demarco,MacDemarco.jpeg
+25,Fujiya & Miyagi,Fujiya&Miyagi.jpeg
+26,Zola Jesus,ZolaJesus.jpeg
+27,The Cadillac Three,TheCadillacThree.jpeg
+28,Morgan James,MorganJames.jpeg
+29,Wolf Alice,WolfAlice.jpeg
+30,Julien Baker,JulienBaker.jpeg
+31,Nelly,Nelly.jpeg
+32,James Arthur,JamesArthur.jpeg
+33,Columbia Mills,ColumbiaMills.jpeg
+34,TOPS,TOPS.jpeg
+35,Imelda May,ImeldaMay.jpeg
+36,Kim Churchill,KimChurchill.jpeg
+37,Little Mix,LittleMix.jpeg
+38,Lucy Rose,LucyRose.jpeg
+39,Milky Chance,MilkyChance.jpeg
+40,Blue Hawaii,BlueHawaii.jpeg
+41,Bay City Rollers,BayCityRollers.jpeg
+42,Shed Seven,ShedSeven.jpeg
+43,Picture This,PictureThis.jpeg
+44,The Strypes,TheStrypes.jpeg
+45,Wild Front,WildFront.jpeg
+46,Gordi,Gordi.jpeg
+47,Glen Hansard,GlenHansard.jpeg
+48,Bitch Falcon,BitchFalcon.jpeg
+49,Brand New,BrandNew.jpeg
+50,Jesca Hoop,JescaHoop.jpeg
+51,Queen & Adam Lambert,Queen&AdamLambert.jpeg
+52,Andre Rieu,AndreRieu.jpeg
+53,Bryson Tiller,BrysonTiller.jpeg
+54,Protomartyr,Protomartyr.jpeg
+55,Stu Larsen,StuLarsen.jpeg
+56,Josh Ritter and The Royal City Band,JoshRitterandTheRoyalCityBand.jpeg
+57,Kasabian,Kasabian.jpeg
+58,Bernard Fanning,BernardFanning.jpeg
+59,Sam Amidon,SamAmidon.jpeg
+60,Alice Cooper,AliceCooper.jpeg
+61,Paul Brady,PaulBrady.jpeg
+62,God Is An Astronaut,GodIsAnAstronaut.jpeg
+63,The Killers,TheKillers.jpeg
+64,Camille O'Sullivan,CamilleO'Sullivan.jpeg
+65,Cyril Hahn,CyrilHahn.png
+66,Queens Of The Stone Age,QueensOfTheStoneAge.jpeg
+67,Peter Hook and The Light,PeterHookandTheLight.jpeg
+68,Christy Moore,ChristyMoore.jpeg
+69,Aslan,Aslan.jpeg
+70,Paddy Casey,PaddyCasey.jpeg
+71,Sun Kil Moon,SunKilMoon.jpeg
+72,Rhiannon Giddens,RhiannonGiddens.jpeg
+73,Wolf Parade,WolfParade.jpeg
+74,Destroyer,Destroyer.jpeg
+75,Happy Mondays,HappyMondays.jpeg
+76,Damien Dempsey,DamienDempsey.jpeg
+77,Songhoy Blues,SonghoyBlues.jpeg
+78,Opeth,Opeth.jpeg
+79,Hoodie Allen,HoodieAllen.jpeg
+80,Depeche Mode,DepecheMode.jpeg
+81,Royal Blood,RoyalBlood.jpeg
+82,The Eskies,TheEskies.jpeg
+83,Steps,Steps.png
+84,Kiasmos,Kiasmos.jpeg
+85,James Blunt,JamesBlunt.jpeg
+86,Mac Demarco,MacDemarco.jpeg
+87,Fujiya & Miyagi,Fujiya&Miyagi.jpeg
+88,Zola Jesus,ZolaJesus.jpeg
+89,The Cadillac Three,TheCadillacThree.jpeg
+90,Morgan James,MorganJames.jpeg
+91,Wolf Alice,WolfAlice.jpeg
+92,Julien Baker,JulienBaker.jpeg
+93,Nelly,Nelly.jpeg
+94,James Arthur,JamesArthur.jpeg
+95,Columbia Mills,ColumbiaMills.jpeg
+96,TOPS,TOPS.jpeg
+97,Imelda May,ImeldaMay.jpeg
+98,Kim Churchill,KimChurchill.jpeg
+99,Little Mix,LittleMix.jpeg
+100,Lucy Rose,LucyRose.jpeg
+101,Milky Chance,MilkyChance.jpeg
+102,Blue Hawaii,BlueHawaii.jpeg
+103,Bay City Rollers,BayCityRollers.jpeg
+104,Shed Seven,ShedSeven.jpeg
+105,Picture This,PictureThis.jpeg
+106,The Strypes,TheStrypes.jpeg
+107,Wild Front,WildFront.jpeg
+108,Gordi,Gordi.jpeg
+109,Glen Hansard,GlenHansard.jpeg
+110,Bitch Falcon,BitchFalcon.jpeg
+111,Brand New,BrandNew.jpeg
+112,Jesca Hoop,JescaHoop.jpeg
+113,Queen & Adam Lambert,Queen&AdamLambert.jpeg
+114,Andre Rieu,AndreRieu.jpeg
+115,Bryson Tiller,BrysonTiller.jpeg
+116,Protomartyr,Protomartyr.jpeg
+117,Stu Larsen,StuLarsen.jpeg
+118,Josh Ritter and The Royal City Band,JoshRitterandTheRoyalCityBand.jpeg
+119,Kasabian,Kasabian.jpeg
+120,Bernard Fanning,BernardFanning.jpeg
+121,Sam Amidon,SamAmidon.jpeg
+122,Alice Cooper,AliceCooper.jpeg
+123,Paul Brady,PaulBrady.jpeg
+124,God Is An Astronaut,GodIsAnAstronaut.jpeg
+125,The Killers,TheKillers.jpeg
+126,Camille O'Sullivan,CamilleO'Sullivan.jpeg
+127,Cyril Hahn,CyrilHahn.png
+128,Queens Of The Stone Age,QueensOfTheStoneAge.jpeg
+129,Peter Hook and The Light,PeterHookandTheLight.jpeg
+130,Christy Moore,ChristyMoore.jpeg
+131,Aslan,Aslan.jpeg
+132,Paddy Casey,PaddyCasey.jpeg
+133,Sun Kil Moon,SunKilMoon.jpeg
+134,Rhiannon Giddens,RhiannonGiddens.jpeg
+135,Wolf Parade,WolfParade.jpeg
+136,Destroyer,Destroyer.jpeg
+137,Happy Mondays,HappyMondays.jpeg
+138,Damien Dempsey,DamienDempsey.jpeg
+139,Songhoy Blues,SonghoyBlues.jpeg
+140,Opeth,Opeth.jpeg
+141,Hoodie Allen,HoodieAllen.jpeg
+142,Depeche Mode,DepecheMode.jpeg
+143,Royal Blood,RoyalBlood.jpeg
+144,The Eskies,TheEskies.jpeg
+145,Steps,Steps.png
+146,Kiasmos,Kiasmos.jpeg
+147,James Blunt,JamesBlunt.jpeg
+148,Mac Demarco,MacDemarco.jpeg
+149,Fujiya & Miyagi,Fujiya&Miyagi.jpeg
+150,Zola Jesus,ZolaJesus.jpeg
+151,The Cadillac Three,TheCadillacThree.jpeg
+152,Morgan James,MorganJames.jpeg
+153,Wolf Alice,WolfAlice.jpeg
+154,Julien Baker,JulienBaker.jpeg
+155,Nelly,Nelly.jpeg
+156,James Arthur,JamesArthur.jpeg
+157,Columbia Mills,ColumbiaMills.jpeg
+158,TOPS,TOPS.jpeg
+159,Imelda May,ImeldaMay.jpeg
+160,Kim Churchill,KimChurchill.jpeg
+161,Little Mix,LittleMix.jpeg
+162,Lucy Rose,LucyRose.jpeg
+163,Milky Chance,MilkyChance.jpeg
+164,Blue Hawaii,BlueHawaii.jpeg
+165,Bay City Rollers,BayCityRollers.jpeg
+166,Shed Seven,ShedSeven.jpeg
+167,Picture This,PictureThis.jpeg
+168,The Strypes,TheStrypes.jpeg
+169,Wild Front,WildFront.jpeg
+170,Gordi,Gordi.jpeg
+171,Glen Hansard,GlenHansard.jpeg
+172,Bitch Falcon,BitchFalcon.jpeg
+173,Brand New,BrandNew.jpeg
+174,Jesca Hoop,JescaHoop.jpeg
+175,Queen & Adam Lambert,Queen&AdamLambert.jpeg
+176,Andre Rieu,AndreRieu.jpeg
+177,Bryson Tiller,BrysonTiller.jpeg
+178,Protomartyr,Protomartyr.jpeg
+179,Stu Larsen,StuLarsen.jpeg
+180,Josh Ritter and The Royal City Band,JoshRitterandTheRoyalCityBand.jpeg
+181,Kasabian,Kasabian.jpeg
+182,Bernard Fanning,BernardFanning.jpeg
+183,Sam Amidon,SamAmidon.jpeg
+184,Alice Cooper,AliceCooper.jpeg
+185,Paul Brady,PaulBrady.jpeg
+186,God Is An Astronaut,GodIsAnAstronaut.jpeg
+187,The Killers,TheKillers.jpeg
+188,Camille O'Sullivan,CamilleO'Sullivan.jpeg
+189,Cyril Hahn,CyrilHahn.png
+190,Queens Of The Stone Age,QueensOfTheStoneAge.jpeg
+191,Peter Hook and The Light,PeterHookandTheLight.jpeg
+192,Christy Moore,ChristyMoore.jpeg
+193,Aslan,Aslan.jpeg
+194,Paddy Casey,PaddyCasey.jpeg
+195,Sun Kil Moon,SunKilMoon.jpeg
+196,Rhiannon Giddens,RhiannonGiddens.jpeg
+197,Wolf Parade,WolfParade.jpeg
+198,Destroyer,Destroyer.jpeg
+199,Happy Mondays,HappyMondays.jpeg
+200,Damien Dempsey,DamienDempsey.jpeg
+201,Songhoy Blues,SonghoyBlues.jpeg
+202,Opeth,Opeth.jpeg
+203,Hoodie Allen,HoodieAllen.jpeg
+204,Depeche Mode,DepecheMode.jpeg
+205,Royal Blood,RoyalBlood.jpeg
+206,The Eskies,TheEskies.jpeg
+207,Steps,Steps.png
+208,Kiasmos,Kiasmos.jpeg
+209,James Blunt,JamesBlunt.jpeg
+210,Mac Demarco,MacDemarco.jpeg
+211,Fujiya & Miyagi,Fujiya&Miyagi.jpeg
+212,Zola Jesus,ZolaJesus.jpeg
+213,The Cadillac Three,TheCadillacThree.jpeg
+214,Morgan James,MorganJames.jpeg
+215,Wolf Alice,WolfAlice.jpeg
+216,Julien Baker,JulienBaker.jpeg
+217,Nelly,Nelly.jpeg
+218,James Arthur,JamesArthur.jpeg
+219,Columbia Mills,ColumbiaMills.jpeg
+220,TOPS,TOPS.jpeg
+221,Imelda May,ImeldaMay.jpeg
+222,Kim Churchill,KimChurchill.jpeg
+223,Little Mix,LittleMix.jpeg
+224,Lucy Rose,LucyRose.jpeg
+225,Milky Chance,MilkyChance.jpeg
+226,Blue Hawaii,BlueHawaii.jpeg
+227,Bay City Rollers,BayCityRollers.jpeg
+228,Shed Seven,ShedSeven.jpeg
+229,Picture This,PictureThis.jpeg
+230,The Strypes,TheStrypes.jpeg
+231,Wild Front,WildFront.jpeg
+232,Gordi,Gordi.jpeg
+233,Glen Hansard,GlenHansard.jpeg
+234,Bitch Falcon,BitchFalcon.jpeg
+235,Brand New,BrandNew.jpeg
+236,Jesca Hoop,JescaHoop.jpeg
+237,Queen & Adam Lambert,Queen&AdamLambert.jpeg
+238,Andre Rieu,AndreRieu.jpeg
+239,Bryson Tiller,BrysonTiller.jpeg
+240,Protomartyr,Protomartyr.jpeg
+241,Stu Larsen,StuLarsen.jpeg
+242,Josh Ritter and The Royal City Band,JoshRitterandTheRoyalCityBand.jpeg
+243,Kasabian,Kasabian.jpeg
+244,Bernard Fanning,BernardFanning.jpeg
+245,Sam Amidon,SamAmidon.jpeg
+246,Alice Cooper,AliceCooper.jpeg
+247,Paul Brady,PaulBrady.jpeg
+248,God Is An Astronaut,GodIsAnAstronaut.jpeg
