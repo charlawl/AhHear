@@ -51,7 +51,7 @@ def get_list_item(cls):
 	return [row._asdict() for row in final_query]
 
 def get_image(item):
-	return os.path.join('data','images',item.img)
+	return os.path.join('data','images','TheKillers.jpeg')
 
 @hug.get('/venues_list', output=hug.output_format.pretty_json)
 def venues_list():
@@ -69,15 +69,35 @@ def gigs_for_venue(venue_name: hug.types.text):
 
 
 @hug.get('/gigs', output=hug.output_format.pretty_json)
-def gigs():
+def gigs(venue: int=None):
 	session = Session()
-	return session.query(Gig.datetime, Band.name, Band.img, Venue.name, Venue.img, Venue.location_lat, Venue.location_lng).join(Venue,Band).all()
+	if venue:
+		query_a = session.query(Gig.id.label('id'),
+								# Venue.name.label("venue")
+							   	func.count(Recording.id).label('num_samples'),
+							   	func.avg(Recording.spl).label('avg_samples')).outerjoin(Recording,Venue).filter(Gig.venue_id == venue).group_by(Gig.id).subquery()
+
+		query_b = session.query(Gig.id.label("id"), 
+								Gig.datetime.label("time"), 
+								Band.name.label("name"), 
+								Band.img.label("img")).outerjoin(Band).subquery()
+
+		final_query = session.query(query_a.c.id,
+								query_b.c.img,
+								query_a.c.num_samples,
+								query_b.c.time,
+								query_b.c.name,
+								# query_a.c.venue,
+								query_a.c.avg_samples).outerjoin(query_b, query_a.c.id==query_b.c.id).all()
+
+		return [row._asdict() for row in final_query]
+	else:
+		return session.query(Gig.datetime, Band.name, Band.img, Venue.name, Venue.img, Venue.location_lat, Venue.location_lng).join(Venue,Band).all()
 
 @hug.get('/recordings', output=hug.output_format.pretty_json)
 def recordings():
 	session = Session()
 	return session.query(Recording.spl, Recording.xpercent, Recording.ypercent, Gig.datetime, Band.name, Venue.name).join(Gig, Band, Venue).all()
-
 
 @hug.get('/venue_image', output=hug.output_format.file)
 def venue_image(id:int):
@@ -91,11 +111,15 @@ def band_image(id:int):
 		band = session.query(Band).get(id)
 		return get_image(band)
 
+@hug.get('/gigs_for_venue', output=hug.output_format.pretty_json)
+def gigs_for_venue(venue_name: int):
+    session = Session()
+   
+    return session.query(Gig.datetime, Gig.id, Band.name, Band.img, Band.avg_samples, Band.num_samples, Band.num_gigs, Venue.name).join(Venue,Band).filter(Venue.name==Venue.name)
+
 @hug.post('/input_recording')
 def sample_reading(body):
-
 	with session_scope() as session:
-
 		recording = Recording(spl=body["spl"], xpercent=body["xpercent"], ypercent=body["ypercent"], gig_id=body["gig_id"])
 		session.add(recording)
 		session.commit()
