@@ -11,6 +11,7 @@ Base.metadata.create_all(engine)
 # Following code populates the database with the csv files.
 session = Session()
 with open('data/bands.csv', 'rt', encoding='utf-8') as file:
+	next(file)
 	for line in file:
 		_id, name, img = line.strip().split(',')
 		band = Band(name=name, img=img)
