@@ -25,25 +25,26 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+import ViewComponents.Band;
 import ViewComponents.DownloadVenueImage;
 import ViewComponents.Venue;
 import ViewComponents.VenueListItem;
 
 public class VenueScore extends AppCompatActivity{
 
-    ArrayList<Venue> venues;
+    ArrayList<Band> bands;
     ListView listView;
     private static VenueListItem listItem;
-    ArrayList<Venue> result = new ArrayList<>();
+    ArrayList<Band> result = new ArrayList<>();
 
-    private class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
+    private class DownloadBandsTask extends AsyncTask<URL, Integer, ArrayList<Band>> {
         private Activity activity;
 
-        public DownloadVenuesTask(Activity activity) {
+        public DownloadBandsTask(Activity activity) {
             this.activity = activity;
         }
 
-        protected ArrayList<Venue> doInBackground(URL... urls) {
+        protected ArrayList<Band> doInBackground(URL... urls) {
             int count = urls.length;
 
             for (URL url : urls) {
@@ -63,13 +64,20 @@ public class VenueScore extends AppCompatActivity{
                     try {
                         JSONArray arr = new JSONArray(sb.toString());
                         for (int i = 0; i < arr.length(); i++) {
-                            JSONObject venue = arr.getJSONObject(i);
-                            result.add(new Venue(
-                                    venue.getInt("id"),
-                                    venue.getString("name"),
-                                    venue.getInt("numGigs"),
-                                    venue.getInt("numSamples"),
-                                    venue.getInt("decibels")
+                            JSONObject band = arr.getJSONObject(i);
+                            System.out.println(band.getString("name"));
+                            result.add(new Band(
+                                    1,
+                                    band.getString("name"),
+                                    12,
+                                    14,
+                                    2
+//                            result.add(new Band(
+//                                    band.getInt("id"),
+//                                    band.getString("name"),
+//                                    band.getInt("numGigs"),
+//                                    band.getInt("numSamples"),
+//                                    band.getInt("decibels")
                             ));
                         }
                     } catch (JSONException e) {
@@ -124,11 +132,11 @@ public class VenueScore extends AppCompatActivity{
         }
 
         listView = (ListView) findViewById(R.id.venuesListVenueScorePage);
-        VenueScore.DownloadVenuesTask downloadVenuesTask = new VenueScore.DownloadVenuesTask(this);
+        VenueScore.DownloadBandsTask downloadVenuesTask = new VenueScore.DownloadBandsTask(this);
 
         try {
             downloadVenuesTask.execute(
-                    new URL("http", "10.0.2.2", 8000, "venues_list"));
+                    new URL("http", "10.0.2.2", 8000, "venuescore?venue_name="+name));
 
         } catch (MalformedURLException e) {
             Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);

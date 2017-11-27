@@ -89,6 +89,14 @@ def bands():
 	session = Session()
 	return session.query(Band.name)
 
+
+@hug.get('/venuescore', output=hug.output_format.pretty_json)
+def bands_for_venue(venue_name: hug.types.text):
+	session = Session()
+	result = session.query(Gig.date, Gig.time, Band.name, Venue.name).join(Venue,Band).filter(Venue.name == venue_name)
+	return [item._asdict() for item in result]
+
+
 @hug.get('/gigs', output=hug.output_format.pretty_json)
 def gigs():
 	session = Session()
