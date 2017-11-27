@@ -69,7 +69,7 @@ public class VenueScore extends AppCompatActivity{
                             int numGigs = band.isNull("num_gigs")? 0: band.getInt("num_gigs");
                             int numSamples = band.isNull("num_samples")? 0: band.getInt("num_samples");
                             int avgSamples = band.isNull("avg_samples")? 0: band.getInt("avg_samples");
-                            int gigId = band.isNull("gig_id")? 0: band.getInt("gig_id");
+                            int gigId = band.isNull("id")? 0: band.getInt("id");
                             result.add(new Band(
                                     band.getInt("id"),
                                     band.getString("name"),
@@ -136,7 +136,7 @@ public class VenueScore extends AppCompatActivity{
 
         try {
             downloadBandsTask.execute(
-                    new URL("http", "gavs.work", 8000, "bands_list"));
+                    new URL("http", "gavs.work", 8000, "gigs?venue=" + id));
 
         } catch (MalformedURLException e) {
             Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
