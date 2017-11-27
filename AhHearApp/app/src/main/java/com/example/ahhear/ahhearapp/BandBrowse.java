@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class BandBrowse extends AppCompatActivity {
     ArrayList<Band> bands;
     ListView listView;
     private static BandListItem listItem;
+    ArrayList<Band> result = new ArrayList<>();
 
     private class DownloadBandsTask extends AsyncTask<URL, Integer, ArrayList<Band>> {
         private Activity activity;
@@ -42,7 +44,7 @@ public class BandBrowse extends AppCompatActivity {
         }
         protected ArrayList<Band> doInBackground(URL... urls) {
             int count = urls.length;
-            ArrayList<Band> result = new ArrayList<>();
+
 
             for (URL url : urls) {
                 try {
@@ -70,7 +72,8 @@ public class BandBrowse extends AppCompatActivity {
                                     band.getString("name"),
                                     numGigs,
                                     numSamples,
-                                    avgSamples
+                                    avgSamples,
+                                    1
                             ));
                         }
                     } catch (JSONException e) {
@@ -114,7 +117,19 @@ public class BandBrowse extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
+        // Code to open the venue score page after clicking one of the list view items
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Intent myIntent = new Intent(view.getContext(), BandScore.class);
+                myIntent.putExtra("venueId", result.get(position).getId());
+                myIntent.putExtra("venueName", result.get(position).getName());
+                myIntent.putExtra("venueNumGigs", result.get(position).getNumGigs());
+                myIntent.putExtra("venueNumSamples", result.get(position).getNumSamples());
+                myIntent.putExtra("venueDecibels", result.get(position).getDecibels());
+                startActivityForResult(myIntent, 0);
+            }
+        });
 
         // Temp button to get to heatmap.
         Button heatmap = (Button) findViewById(R.id.goto_heatmap);

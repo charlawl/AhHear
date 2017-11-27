@@ -8,8 +8,8 @@ import android.graphics.Bitmap;
 
 public class Band extends ListData{
 
-    public Band(int id, String name, int numGigs, int numSamples, int decibels) {
-        super(id, name, numGigs, numSamples, decibels);
+    public Band(int id, String name, int numGigs, int numSamples, int decibels, int gigid) {
+        super(id, name, numGigs, numSamples, decibels, gigid);
     }
 
 

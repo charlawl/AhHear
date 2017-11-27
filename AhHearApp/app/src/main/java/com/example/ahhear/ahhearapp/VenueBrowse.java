@@ -73,6 +73,7 @@ public class VenueBrowse extends AppCompatActivity {
                                     numGigs,
                                     numSamples,
                                     avgSamples,
+                                    1,
                                     locationLng,
                                     locationLat
                             ));
@@ -128,7 +129,6 @@ public class VenueBrowse extends AppCompatActivity {
                 myIntent.putExtra("venueNumSamples", result.get(position).getNumSamples());
                 myIntent.putExtra("venueDecibels", result.get(position).getDecibels());
                 startActivityForResult(myIntent, 0);
-
             }
         });
     }
