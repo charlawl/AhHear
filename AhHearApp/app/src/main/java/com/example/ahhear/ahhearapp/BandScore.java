@@ -74,8 +74,8 @@ public class BandScore extends AppCompatActivity{
                             double locationLat = venue.isNull("location_lat")? 0: venue.getDouble("location_lat");
 
                             result.add(new Venue(
-                                    venue.getInt("id"),
-                                    venue.getString("name"),
+                                    venue.getInt("venue_id"),
+                                    venue.getString("venue_name"),
                                     numGigs,
                                     numSamples,
                                     avgSamples,
@@ -110,13 +110,36 @@ public class BandScore extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.band_score);
+        int id = getIntent().getIntExtra("bandId", 0);
+        String name = getIntent().getStringExtra("bandName");
+        int gigs = getIntent().getIntExtra("bandNumGigs", 0);
+        int samples = getIntent().getIntExtra("bandNumSamples", 0);
+        int db = getIntent().getIntExtra("bandDecibels", 0);
+
+        TextView bandNameBandScorePage = (TextView)findViewById(R.id.bandNameBandScorePage);
+        TextView bandGigCountBandScorePage = (TextView)findViewById(R.id.bandGigCountBandScorePage);
+        TextView bandDbBandScorePage = (TextView)findViewById(R.id.bandDbBandScorePage);
+
+        bandNameBandScorePage.setText(name);
+        bandGigCountBandScorePage.setText(getString(R.string.gigs, gigs));
+        bandDbBandScorePage.setText(getString(R.string.decibelsAvg, db));
+
+        DownloadImage downloadBandImage = new DownloadImage((ImageView)findViewById(R.id.bandImageBandScorePage));
+
+        try {
+            downloadBandImage.execute(new URL("http", "gavs.work", 8000, "band_image?id="+id));
+        } catch (MalformedURLException e) {
+            Toast toasterr = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
+            toasterr.show();
+            e.printStackTrace();
+        }
 
         listView = (ListView) findViewById(R.id.venuesListBandScorePage);
         DownloadVenuesTask downloadVenuesTask = new DownloadVenuesTask(this);
 
         try {
             downloadVenuesTask.execute(
-                    new URL("http", "gavs.work", 8000, "venues_list"));
+                    new URL("http", "gavs.work", 8000, "gigs?band="+id));
 
         } catch (MalformedURLException e) {
             Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);

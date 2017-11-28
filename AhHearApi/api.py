@@ -59,37 +59,74 @@ def bands_list():
 	return get_list_item(Band)
 
 
-@hug.get('/gigsforvenue', output=hug.output_format.pretty_json)
-def gigs_for_venue(venue_name: hug.types.text):
-	session = Session()
-	return session.query(Gig.id, Band.name, Band.img, Venue.name).join(Gig,Venue,Band).filter(Venue.name==venue_name)
-
-
 @hug.get('/gigs', output=hug.output_format.pretty_json)
-def gigs(venue: int=None):
+def gigs(venue: int=None, band: int=None):
 	session = Session()
 	if venue:
-		query_a = session.query(Gig.id.label('id'),
-								# Venue.name.label("venue")
+		query_a = session.query(Gig.id.label('gig_id'),
 							   	func.count(Recording.id).label('num_samples'),
 							   	func.avg(Recording.spl).label('avg_samples')).outerjoin(Recording,Venue).filter(Gig.venue_id == venue).group_by(Gig.id).subquery()
 
-		query_b = session.query(Gig.id.label("id"), 
+		query_b = session.query(Gig.id.label('gig_id'),
+							   	Venue.name.label("venue_name"),
+							   	Venue.id.label("venue_id"),
+							   	Venue.img.label("venue_img")).outerjoin(Venue).filter(Gig.venue_id == venue).group_by(Gig.id).subquery()
+
+		query_c = session.query(query_a.c.gig_id,
+								query_a.c.num_samples,
+								query_a.c.avg_samples,
+								query_b.c.venue_name,
+								query_b.c.venue_id).outerjoin(query_b, query_a.c.gig_id==query_b.c.gig_id).subquery()
+
+		query_d = session.query(Gig.id.label("gig_id"), 
 								Gig.datetime.label("time"), 
-								Band.name.label("name"), 
+								Band.name.label("band_name"), 
+								Band.id.label("band_id"),
 								Band.img.label("img")).outerjoin(Band).subquery()
 
-		final_query = session.query(query_a.c.id,
-								query_b.c.img,
-								query_a.c.num_samples,
-								query_b.c.time,
-								query_b.c.name,
-								# query_a.c.venue,
-								query_a.c.avg_samples).outerjoin(query_b, query_a.c.id==query_b.c.id).all()
+		final_query = session.query(query_c.c.gig_id,
+								query_c.c.num_samples,
+								query_c.c.avg_samples,
+								query_c.c.venue_name,
+								query_c.c.venue_id,
+								query_d.c.band_name,
+								query_d.c.band_id,
+								query_d.c.time).outerjoin(query_d, query_c.c.gig_id==query_d.c.gig_id).all()
+		return [row._asdict() for row in final_query]
+	elif band:
+		query_a = session.query(Gig.id.label('gig_id'),
+							   	func.count(Recording.id).label('num_samples'),
+							   	func.avg(Recording.spl).label('avg_samples')).outerjoin(Recording,Venue).filter(Gig.band_id == band).group_by(Gig.id).subquery()
 
+		query_b = session.query(Gig.id.label('gig_id'),
+							   	Venue.name.label("venue_name"),
+							   	Venue.id.label("venue_id"),
+							   	Venue.img.label("venue_img")).outerjoin(Venue).group_by(Gig.id).subquery()
+
+		query_c = session.query(query_a.c.gig_id,
+								query_a.c.num_samples,
+								query_a.c.avg_samples,
+								query_b.c.venue_name,
+								query_b.c.venue_id).outerjoin(query_b, query_a.c.gig_id==query_b.c.gig_id).subquery()
+
+		query_d = session.query(Gig.id.label("gig_id"), 
+								Gig.datetime.label("time"), 
+								Band.name.label("band_name"), 
+								Band.id.label("band_id"),
+								Band.img.label("img")).outerjoin(Band).subquery()
+
+		final_query = session.query(query_c.c.gig_id,
+								query_c.c.num_samples,
+								query_c.c.avg_samples,
+								query_c.c.venue_name,
+								query_c.c.venue_id,
+								query_d.c.band_name,
+								query_d.c.band_id,
+								query_d.c.time).outerjoin(query_d, query_c.c.gig_id==query_d.c.gig_id).all()
 		return [row._asdict() for row in final_query]
 	else:
 		return session.query(Gig.datetime, Band.name, Band.img, Venue.name, Venue.img, Venue.location_lat, Venue.location_lng).join(Venue,Band).all()
+
 
 @hug.get('/recordings', output=hug.output_format.pretty_json)
 def recordings():
