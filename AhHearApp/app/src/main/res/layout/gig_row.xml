@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/gigName"
-        android:layout_width="220dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/gigImage"
         android:textColor="#ffffff"
@@ -25,15 +25,5 @@
         android:text="Gig Name"
         android:textAlignment="center" />
 
-    <TextView
-        android:id="@+id/gigDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:layout_gravity="center"
-        android:layout_toEndOf="@+id/venueImage"
-        android:contentDescription="@string/gig"
-        android:text="Gig Date"
-        android:textAlignment="center" />
 
 </android.widget.LinearLayout>

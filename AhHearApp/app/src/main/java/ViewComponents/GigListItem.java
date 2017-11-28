@@ -31,7 +31,6 @@ public class GigListItem extends ArrayAdapter<Band> {
         super(context, R.layout.gig_row, data);
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         View v = convertView;
@@ -44,7 +43,6 @@ public class GigListItem extends ArrayAdapter<Band> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.gig_row, parent, false);
             viewHolder.gigNameView = (TextView) convertView.findViewById(R.id.gigName);
-            viewHolder.gigDateView = (TextView) convertView.findViewById(R.id.gigDate);
             viewHolder.gigImgView = (ImageView) convertView.findViewById(R.id.gigImage);
 
             result = convertView;
@@ -58,7 +56,6 @@ public class GigListItem extends ArrayAdapter<Band> {
 
         Resources res = getContext().getResources();
         viewHolder.gigNameView.setText(band.getName());
-        viewHolder.gigDateView.setText(res.getString(R.string.gigs, band.getNumGigs()));
 
         DownloadImage downloadBandImage = new DownloadImage(viewHolder.gigImgView);
 
@@ -69,8 +66,6 @@ public class GigListItem extends ArrayAdapter<Band> {
             toasterr.show();
             e.printStackTrace();
         }
-
-
         return convertView;
     }
 }
