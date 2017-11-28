@@ -158,7 +158,7 @@ public class VenueHeatmap extends AppCompatActivity {
 
                 Uri.Builder floorplanbuilder = new Uri.Builder();
                 floorplanbuilder.scheme("http");
-                floorplanbuilder.encodedAuthority("10.0.2.2:8000");
+                floorplanbuilder.encodedAuthority("gavs.work:8000");
                 floorplanbuilder.appendPath("floorplan_image");
                 floorplanbuilder.appendQueryParameter("id", VenueId);
                 floorplanbuilder.build();
@@ -262,7 +262,7 @@ public class VenueHeatmap extends AppCompatActivity {
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http");
 
-            builder.encodedAuthority("10.0.2.2:8000");
+            builder.encodedAuthority("gavs.work:8000");
             builder.appendPath("gig_recordings");
 
             builder.appendQueryParameter("gig_id", String.valueOf(gig_id));
