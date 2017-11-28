@@ -108,7 +108,6 @@ def band_image(id:int):
 		band = session.query(Band).get(id)
 		return os.path.join('data','images','thumbnails', band.img + ".thumbnail")
 
-
 @hug.post('/input_recording')
 def sample_reading(body):
 	with session_scope() as session:
