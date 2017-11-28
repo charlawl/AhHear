@@ -1,3 +1,6 @@
+# SQLite DB
+*.db
+
 # Built application files
 *.apk
 *.ap_
