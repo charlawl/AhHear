@@ -20,16 +20,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <Button
-        android:id="@+id/goto_heatmap"
-        android:layout_width="213dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="291dp"
-        android:text="@string/heatmap"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </android.widget.LinearLayout>
