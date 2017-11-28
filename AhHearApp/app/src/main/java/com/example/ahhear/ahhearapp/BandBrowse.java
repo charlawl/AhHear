@@ -104,6 +104,7 @@ public class BandBrowse extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.bandsList);
         DownloadBandsTask downloadBandsTask = new DownloadBandsTask(this);
 
+
         try {
             downloadBandsTask.execute(
                     new URL("http", "gavs.work", 8000, "bands_list"));
@@ -113,7 +114,6 @@ public class BandBrowse extends AppCompatActivity {
             toast.show();
             e.printStackTrace();
         }
-
 
 
         // Temp button to get to heatmap.
