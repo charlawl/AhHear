@@ -33,7 +33,7 @@ public class VenueBrowse extends AppCompatActivity {
     private static VenueListItem listItem;
     ArrayList<Venue> result = new ArrayList<>();
 
-    private class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
+    class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
         private Activity activity;
 
         public DownloadVenuesTask(Activity activity) {
@@ -73,6 +73,7 @@ public class VenueBrowse extends AppCompatActivity {
                                     numGigs,
                                     numSamples,
                                     avgSamples,
+                                    1,
                                     locationLng,
                                     locationLat
                             ));
@@ -128,7 +129,6 @@ public class VenueBrowse extends AppCompatActivity {
                 myIntent.putExtra("venueNumSamples", result.get(position).getNumSamples());
                 myIntent.putExtra("venueDecibels", result.get(position).getDecibels());
                 startActivityForResult(myIntent, 0);
-
             }
         });
     }
