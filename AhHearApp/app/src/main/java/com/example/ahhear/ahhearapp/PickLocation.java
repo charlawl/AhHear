@@ -12,41 +12,27 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.ArrayMap;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.net.ssl.HttpsURLConnection;
-
-import ca.hss.heatmaplib.HeatMap;
 
 public class PickLocation extends AppCompatActivity {
     public static final String EXTRA_DECIBEL = "com.example.ahhear.MESSAGE";
@@ -220,8 +206,6 @@ public class PickLocation extends AppCompatActivity {
 
                         System.out.println(chosen_percent_width);
                         System.out.println(chosen_percent_height);
-
-
 
                         if(pinview.getDrawable() == null) {
 
