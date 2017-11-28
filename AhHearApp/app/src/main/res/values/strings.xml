@@ -2,6 +2,7 @@
     <string name="app_name">AhHearApp</string>
     <string name="bands">Bands</string>
     <string name="venues">Venues</string>
+    <string name="gig">Gig</string>
     <string name="heatmap">Heatmap</string>
     <string name="record">Record</string>
     <string name="decibelsAvg">Avg: %1d db </string>
