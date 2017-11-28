@@ -117,16 +117,16 @@ public class BandBrowse extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Code to open the venue score page after clicking one of the list view items
+        // Code to open the band score page after clicking one of the list view items
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Intent myIntent = new Intent(view.getContext(), BandScore.class);
-                myIntent.putExtra("venueId", result.get(position).getId());
-                myIntent.putExtra("venueName", result.get(position).getName());
-                myIntent.putExtra("venueNumGigs", result.get(position).getNumGigs());
-                myIntent.putExtra("venueNumSamples", result.get(position).getNumSamples());
-                myIntent.putExtra("venueDecibels", result.get(position).getDecibels());
+                myIntent.putExtra("bandId", result.get(position).getId());
+                myIntent.putExtra("bandName", result.get(position).getName());
+                myIntent.putExtra("bandNumGigs", result.get(position).getNumGigs());
+                myIntent.putExtra("bandNumSamples", result.get(position).getNumSamples());
+                myIntent.putExtra("bandDecibels", result.get(position).getDecibels());
                 startActivityForResult(myIntent, 0);
             }
         });
