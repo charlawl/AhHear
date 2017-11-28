@@ -143,9 +143,6 @@ public class PickLocation extends AppCompatActivity {
         }
     }
 
-
-
-
     private final View.OnTouchListener addPin = new View.OnTouchListener() {
 
         @Override
