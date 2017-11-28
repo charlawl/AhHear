@@ -158,6 +158,31 @@ def gigs(venue: int=None, band: int=None):
 		return session.query(Gig.datetime, Band.name, Band.img, Venue.name, Venue.img, Venue.location_lat, Venue.location_lng).join(Venue,Band).all()
 
 
+@hug.get('/todays_gigs', output=hug.output_format.pretty_json)
+def todays_gigs():
+	session = Session()
+
+	query_a = session.query(Band.id.label("band_id"), 
+							Band.name.label("band_name"), 
+							Band.img.label("band_img"),
+							Gig.id.label("gig_id"), 
+							Gig.datetime).join(Gig).filter(Gig.datetime+datetime.timedelta(days=1)<datetime.datetime.now()).subquery()
+	
+	query_b = session.query(Gig.id.label('gig_id'),
+							   	Venue.name.label("venue_name"),
+							   	Venue.id.label("venue_id"),
+							   	Venue.img.label("venue_img")).outerjoin(Venue).group_by(Gig.id).subquery()
+
+	final_query = session.query(query_a.c.gig_id,
+							query_b.c.venue_name,
+							query_b.c.venue_id,
+							query_b.c.venue_img,
+							query_a.c.band_name,
+							query_a.c.band_id,
+							query_a.c.band_img).outerjoin(query_b, query_a.c.gig_id==query_b.c.gig_id).all()
+	
+	return [row._asdict() for row in final_query]
+
 @hug.get('/recordings', output=hug.output_format.pretty_json)
 def recordings():
 	session = Session()
@@ -200,3 +225,4 @@ def sample_reading(body):
 		session.commit()
 
 	return {'status': 'posted!'}
+
