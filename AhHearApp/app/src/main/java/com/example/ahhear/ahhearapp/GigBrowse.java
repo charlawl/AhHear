@@ -76,7 +76,7 @@ public class GigBrowse extends AppCompatActivity {
                                     numGigs,
                                     numSamples,
                                     avgSamples,
-                                    band.getInt("venue_id")
+                                    band.getInt("gig_id")
                             ));
                         }
                     } catch (JSONException e) {
@@ -124,7 +124,7 @@ public class GigBrowse extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Intent myIntent = new Intent(view.getContext(), PickLocation.class);
-                myIntent.putExtra("venue_id", result.get(position).getGigid());
+                myIntent.putExtra("gig_id", result.get(position).getGigid());
                 startActivityForResult(myIntent, 0);
             }
         });
