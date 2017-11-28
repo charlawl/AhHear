@@ -209,8 +209,6 @@ public class VenueHeatmap extends AppCompatActivity {
                             }
                         });
 
-
-
             } catch (JSONException e) {
                 System.out.println("Json error getting venue_id");
             }
@@ -296,7 +294,7 @@ public class VenueHeatmap extends AppCompatActivity {
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http");
 
-            builder.encodedAuthority("10.0.2.2:8000");
+            builder.encodedAuthority("gavs.work:8000");
             builder.appendPath("gig_recordings");
 
             builder.appendQueryParameter("gig_id", String.valueOf(gig_id));

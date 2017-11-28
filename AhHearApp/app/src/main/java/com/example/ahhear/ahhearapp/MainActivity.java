@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         record = (Button) findViewById(R.id.home_record_btn);
         record.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                startActivity(new Intent(MainActivity.this, PickLocation.class));
+                startActivity(new Intent(MainActivity.this, GigBrowse.class));
             }
         });
     }

@@ -34,10 +34,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class PickLocation extends AppCompatActivity {
+public class PickLocation extends GigBrowse {
     public static final String EXTRA_DECIBEL = "com.example.ahhear.MESSAGE";
     public static final String EXTRA_WIDTH = "com.example.ahhear.WIDTH";
     public static final String EXTRA_HEIGHT = "com.example.ahhear.HEIGHT";
+    public static final String EXTRA_GIGID = "com.example.ahhear.GIGID";
+
     private Button mRecordButton;
     private TextView mRecordLabel;
     private TextView mDecibels;
@@ -50,7 +52,7 @@ public class PickLocation extends AppCompatActivity {
     private float chosen_percent_width;
     public float chosen_percent_height;
     public LocalDataBaseManager localDataBaseManager;
-    private int gigId;
+    public int gig_id;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -58,8 +60,8 @@ public class PickLocation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        int gig_id = getIntent().getIntExtra("gigId", 0);
-        int gig_id = 10;
+        gig_id = getIntent().getIntExtra("gig_id", 1);
+//        int gig_id = 10;
         setContentView(R.layout.pick_location);
 //        set dynamic image // uses picasso for better memory management
 
@@ -70,7 +72,7 @@ public class PickLocation extends AppCompatActivity {
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http");
 
-            builder.encodedAuthority("10.0.2.2:8000");
+            builder.encodedAuthority("gavs.work:8000");
             builder.appendPath("single_gig");
 
             builder.appendQueryParameter("gig_id", String.valueOf(gig_id));
@@ -136,6 +138,7 @@ public class PickLocation extends AppCompatActivity {
         intent.putExtra(EXTRA_DECIBEL, amplitudeDb);
         intent.putExtra(EXTRA_WIDTH, chosen_percent_width);
         intent.putExtra(EXTRA_HEIGHT, chosen_percent_height);
+        intent.putExtra(EXTRA_GIGID, gig_id);
 
         timer.cancel();
         mRecorder.stop();

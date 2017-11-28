@@ -42,7 +42,7 @@ public class DisplayLevel extends AppCompatActivity {
 
         Intent intent = getIntent();
         //TODO: get gig id from intent
-        final int gigId = 2;
+
 
         Bundle bundle = getIntent().getExtras();
 
@@ -51,6 +51,8 @@ public class DisplayLevel extends AppCompatActivity {
         decibelDisplay.setText(Double.toString(decibels));
 
         // print the percentage positions from the previous page.
+        final int gigId = bundle.getInt(PickLocation.EXTRA_GIGID);
+//        final int gigId = 2;
         final float chosen_percent_width = bundle.getFloat(PickLocation.EXTRA_WIDTH);
         final float chosen_percent_height = bundle.getFloat(PickLocation.EXTRA_HEIGHT);
 

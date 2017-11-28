@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <ImageView
+        android:id="@+id/gigImage"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/gigName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/gigImage"
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/gigImage"
+        android:layout_gravity="center"
+        android:layout_toEndOf="@+id/gigImage"
+        android:contentDescription="@string/gig"
+        android:text="Gig Name"
+        android:textAlignment="center" />
+
+
+</android.widget.LinearLayout>
