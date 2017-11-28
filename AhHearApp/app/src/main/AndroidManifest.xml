@@ -43,6 +43,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".GigBrowse"
+            android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".BandBrowse"
             android:parentActivityName=".MainActivity">
             <intent-filter>
@@ -88,19 +97,16 @@
         <activity android:name=".VenueHeatmap">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".DisplayLevel"
             android:parentActivityName=".PickLocation">
-
         </activity>
         <activity
             android:name=".MyRecordings"
             android:parentActivityName=".MainActivity">
-
         </activity>
     </application>
 

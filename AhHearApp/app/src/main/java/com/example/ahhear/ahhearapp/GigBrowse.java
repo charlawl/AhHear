@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import ViewComponents.Band;
 import ViewComponents.BandListItem;
+import ViewComponents.GigListItem;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,11 +31,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class BandBrowse extends AppCompatActivity {
+public class GigBrowse extends AppCompatActivity {
 
     ArrayList<Band> bands;
     ListView listView;
-    private static BandListItem listItem;
+    private static GigListItem listItem;
     ArrayList<Band> result = new ArrayList<>();
 
     private class DownloadBandsTask extends AsyncTask<URL, Integer, ArrayList<Band>> {
@@ -93,7 +94,7 @@ public class BandBrowse extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "Bands downloaded", Toast.LENGTH_SHORT);
             toast.show();
 
-            listItem = new BandListItem(result, getApplicationContext());
+            listItem = new GigListItem(result, getApplicationContext());
             listView.setAdapter(listItem);
         }
     }
@@ -120,7 +121,7 @@ public class BandBrowse extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Intent myIntent = new Intent(view.getContext(), BandScore.class);
+                Intent myIntent = new Intent(view.getContext(), PickLocation.class);
                 myIntent.putExtra("bandId", result.get(position).getId());
                 myIntent.putExtra("bandName", result.get(position).getName());
                 myIntent.putExtra("bandNumGigs", result.get(position).getNumGigs());
@@ -130,12 +131,5 @@ public class BandBrowse extends AppCompatActivity {
             }
         });
 
-        // Temp button to get to heatmap.
-        Button heatmap = (Button) findViewById(R.id.goto_heatmap);
-        heatmap.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                startActivity(new Intent(BandBrowse.this, VenueHeatmap.class));
-            }
-        });
     }
 }
