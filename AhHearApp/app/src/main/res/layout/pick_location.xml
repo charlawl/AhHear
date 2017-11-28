@@ -5,11 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:local="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/TopText"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:layout_weight="1">
+        
+        <TextView
+            android:id="@+id/LoactionBandName"
+            android:textColor="#EAEAEA"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/LoactionVenueName"
+            android:textColor="#EAEAEA"
+            android:textSize="25dp"
+            android:text="TEST1"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/LoactionGigDate"
+            android:layout_width="wrap_content"
+            android:textSize="18dp"
+            android:text="TEST2"
+            android:textAlignment="center"
+            android:textColor="#EAEAEA"
+            android:gravity="center"
+            android:textStyle="italic"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/location_container"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_below="@id/TopText">
 
     <ImageView
         android:id="@+id/floorplan"
@@ -19,7 +69,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_sound"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,6 +80,10 @@
         android:layout_height="40dp"></ImageView>
 
     </RelativeLayout>
+
+    </RelativeLayout>
+
+
 
     <Button
         android:id="@+id/button_rec"
