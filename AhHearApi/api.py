@@ -88,6 +88,11 @@ def venues_list():
 def bands_list():
 	return get_list_item(Band)
 
+@hug.get('/single_gig', output=hug.output_format.pretty_json)
+def bands_list(gig_id:int):
+	session = Session()
+	result = session.query(Gig.datetime.label("gig_date"), Band.name.label("band_name"), Venue.name.label("venue_name"), Venue.id.label("venue_id")).join(Band, Venue).filter(Gig.id == gig_id).all()
+	return [row._asdict() for row in result]
 
 @hug.get('/gigs', output=hug.output_format.pretty_json)
 def gigs(venue: int=None, band: int=None):
@@ -193,8 +198,15 @@ def recordings():
 def recordings(gig_id:int):
 	session = Session()
 	# return session.query(Recording.spl, Recording.xpercent, Recording.ypercent, Gig.datetime, Band.name, Venue.name).join(Gig, Band, Venue).all()
-	result = session.query(Recording.spl, func.avg(Recording.spl).label('avg_samples'), func.count(Recording.id).label('num_samples'), Gig.datetime, Gig.id.label("gig_id"), Band.id.label("band_id"), Venue.id.label("venue_id"), Recording.xpercent, Recording.ypercent, Gig.datetime, Band.name.label('band_name'), Venue.name.label('venue_name')).join(Gig, Band, Venue).filter(Gig.id == gig_id).all()
-	return ([item._asdict() for item in result])
+	result = session.query(Recording.spl, Gig.datetime, Gig.id.label("gig_id"), Band.id.label("band_id"), Venue.id.label("venue_id"), Recording.xpercent, Recording.ypercent, Gig.datetime, Band.name.label('band_name'), Venue.name.label('venue_name')).join(Gig, Band, Venue).filter(Gig.id == gig_id).all()
+	resultfuncs = session.query(func.avg(Recording.spl).label('avg_samples'), func.count(Recording.id).label('num_samples'), Gig.id).join(Gig).filter(Gig.id == gig_id).all()
+	result = ([item._asdict() for item in result])
+	resultfuncs = ([item._asdict() for item in resultfuncs])
+	for i in result:
+		for j in resultfuncs:
+			i["avg_samples"] = j["avg_samples"]
+			i["num_samples"] = j["num_samples"]
+	return result
 
 @hug.get('/venue_image', output=hug.output_format.file)
 def venue_image(id:int):

@@ -3,6 +3,7 @@ package com.example.ahhear.ahhearapp;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -90,36 +91,9 @@ public class VenueHeatmap extends AppCompatActivity {
 
         // when the asynchronous download is finished this runs.
         // displays the heatmap.
-        protected void onPostExecute(JSONArray ReturnArray) {
+        protected void onPostExecute(final JSONArray ReturnArray) {
 
             setContentView(R.layout.heatmap);
-
-            HeatMap heatMap = findViewById(R.id.heatmap);
-            heatMap.setMinimum(0.0);
-            heatMap.setMaximum(100.0);
-
-            // get the width of the current screen.
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-
-            activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int screenWidth = displaymetrics.widthPixels;
-
-            // multiply that by the size ratio of the layout image.
-            Double heatmap_height_double = screenWidth * 0.61194;
-            int heatmap_height = heatmap_height_double.intValue();
-
-            // now set the heatmap Relative Layout container height.
-            RelativeLayout rl = findViewById(R.id.heatmap_container);
-            rl.getLayoutParams().height = heatmap_height;
-
-
-            // Make the colour gradient from green / yellow / red.
-            Map<Float, Integer> colorStops = new ArrayMap<>();
-            colorStops.put(0.0f, 0xff00ff00);
-            colorStops.put(0.5f, 0xffffff00);
-            colorStops.put(1.0f, 0xffff0000);
-            heatMap.setColorStops(colorStops);
-            heatMap.setRadius(900);
 
             try {
 
@@ -164,8 +138,76 @@ public class VenueHeatmap extends AppCompatActivity {
                 floorplanbuilder.build();
 
                 ImageView FloorplanImage = (ImageView) findViewById(R.id.heatmapFloorplan);
-                Picasso.with(activity).load(floorplanbuilder.toString()).into(FloorplanImage);
+//                Picasso.with(activity).load(floorplanbuilder.toString()).into(FloorplanImage);
 
+
+                Picasso.with(activity)
+                        .load(floorplanbuilder.toString())
+                        .into(FloorplanImage, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+
+                                ImageView FloorplanImage = (ImageView) findViewById(R.id.heatmapFloorplan);
+                                float image_height = FloorplanImage.getDrawable().getIntrinsicHeight();
+                                float image_width = FloorplanImage.getDrawable().getIntrinsicWidth();
+
+                                double ratio = image_height / image_width;
+
+                                HeatMap heatMap = findViewById(R.id.heatmap);
+                                heatMap.setMinimum(0.0);
+                                heatMap.setMaximum(100.0);
+
+                                // get the width of the current screen.
+                                DisplayMetrics displaymetrics = new DisplayMetrics();
+
+                                activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                                int screenWidth = displaymetrics.widthPixels;
+
+                                // multiply that by the size ratio of the layout image.
+                                Double heatmap_height_double = screenWidth * ratio;
+                                int heatmap_height = heatmap_height_double.intValue();
+
+                                // now set the heatmap Relative Layout container height.
+                                RelativeLayout rl = findViewById(R.id.heatmap_container);
+                                rl.getLayoutParams().height = heatmap_height;
+                                rl.getLayoutParams().height = heatmap_height;
+
+                                // Make the colour gradient from green / yellow / red.
+                                Map<Float, Integer> colorStops = new ArrayMap<>();
+                                colorStops.put(0.0f, 0xff00ff00);
+                                colorStops.put(0.5f, 0xffffff00);
+                                colorStops.put(1.0f, 0xffff0000);
+                                heatMap.setColorStops(colorStops);
+                                heatMap.setRadius(900);
+
+                                for (int i = 0; i < ReturnArray.length(); i++) {
+                                    HeatMap.DataPoint point = null;
+                                    try {
+                                        JSONObject json = ReturnArray.getJSONObject(i);
+
+                                        System.out.println(json.getString("band_id"));
+                                        float xpercent_temp = (float) json.getDouble("xpercent");
+                                        float xpercent = xpercent_temp / 100;
+
+                                        float ypercent_temp = (float) json.getDouble("ypercent");
+                                        float ypercent = ypercent_temp / 100;
+
+                                        double spl = json.getDouble("spl");
+                                        point = new HeatMap.DataPoint(xpercent, ypercent, spl);
+                                        heatMap.addData(point);
+
+                                    } catch (JSONException e) {
+                                        System.out.print("JSON Exception. (Line 137 of VenueHeatmap.java)");
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
 
             } catch (JSONException e) {
                 System.out.println("Json error getting venue_id");
@@ -201,7 +243,17 @@ public class VenueHeatmap extends AppCompatActivity {
 
                 StringBuilder data = new StringBuilder();
                 data.append("Average SPL: ");
-                String AvgString = bandJson.getString("avg_samples");
+
+                double val;
+                float AvgString;
+                try {
+                    val = ((Number) bandJson.get("avg_samples")).doubleValue();
+                    AvgString = (float) val;
+                } catch (JSONException e){
+                    val = 0.0;
+                    AvgString = (float) val;
+                }
+
                 data.append(AvgString);
 
                 data.append(" | Number Samples: ");
@@ -215,26 +267,6 @@ public class VenueHeatmap extends AppCompatActivity {
                 System.out.println("Json error getting venue_id");
             }
 
-            for (int i = 0; i < ReturnArray.length(); i++) {
-                HeatMap.DataPoint point = null;
-                try {
-                    JSONObject json = ReturnArray.getJSONObject(i);
-
-                    System.out.println(json.getString("band_id"));
-                    float xpercent_temp = (float) json.getDouble("xpercent");
-                    float xpercent = xpercent_temp / 100;
-
-                    float ypercent_temp = (float) json.getDouble("ypercent");
-                    float ypercent = ypercent_temp / 100;
-
-                    double spl = json.getDouble("spl");
-                    point = new HeatMap.DataPoint(xpercent, ypercent, spl);
-                    heatMap.addData(point);
-
-                } catch (JSONException e) {
-                    System.out.print("JSON Exception. (Line 137 of VenueHeatmap.java)");
-                }
-            }
         }
     }
 
