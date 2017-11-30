@@ -2,6 +2,7 @@ package com.example.ahhear.ahhearapp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -270,22 +272,12 @@ public class VenueHeatmap extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         int gig_id = getIntent().getIntExtra("gigId", 0);
-
-        setContentView(R.layout.heatmap);
-        Button mapButton = (Button) findViewById(R.id.mapButton);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Uri searchUri = Uri.parse("geo:0,0?q=pharmacy");
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, searchUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
-            }
-        });
 
         DownloadHeatData downloadHeatData = new DownloadHeatData(this);
         try {
@@ -305,6 +297,16 @@ public class VenueHeatmap extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
             toast.show();
             e.printStackTrace();
+        }
+    }
+
+    public void onClickBtn(View v) {
+
+        Uri searchUri = Uri.parse("geo:0,0?q=pharmacy");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, searchUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
         }
     }
 }
