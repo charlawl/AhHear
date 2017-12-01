@@ -167,7 +167,7 @@ public class PickLocation extends GigBrowse {
                 @Override
                 public void run() {
 //                    System.out.println("------------------*********_____________------------------");
-                    mDecibels.setText(String.format("Amplitude : %s", amplitudeDb));
+                    mDecibels.setText(String.format("Amplitude : %s", String.format("%.2f", amplitudeDb)));
                 }
             });
         }
@@ -192,14 +192,8 @@ public class PickLocation extends GigBrowse {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
 
-//                        pixels
                     float x = event.getX();
                     float y = event.getY();
-
-                    System.out.println("Curser x and y");
-                    System.out.println(x); // 1329
-                    System.out.println(y);
-                    System.out.println(" ");
 
                     String uri = "@drawable/red_pin";
                     int imageResource = getResources().getIdentifier(uri, null, getPackageName());
@@ -213,11 +207,6 @@ public class PickLocation extends GigBrowse {
                     int[] location = new int[2];
                     floorplanview.getLocationOnScreen(location);
 
-                    System.out.println("Floorplan View Location On Screen");
-                    System.out.println(location[0]);
-                    System.out.println(location[1]);
-                    System.out.println(" ");
-
                     DisplayMetrics displayMetrics = new DisplayMetrics();
                     getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                     float screenheight = displayMetrics.heightPixels;
@@ -227,11 +216,6 @@ public class PickLocation extends GigBrowse {
 
                     float pin_width = pinview.getMeasuredHeight();
                     float pin_height = pinview.getMeasuredHeight();
-
-                    System.out.println("Floorplan Width and Height");
-                    System.out.println(floorplan_width);
-                    System.out.println(floorplan_height);  //1330
-                    System.out.println(" ");
 
                     chosen_percent_width = (x / floorplan_height) * 100;
                     chosen_percent_height = (y / floorplan_width) * 100;
@@ -337,10 +321,6 @@ public class PickLocation extends GigBrowse {
                 TextView venueView=(TextView)findViewById(R.id.LoactionVenueName);
                 venueView.setText(VenueName);
                 System.out.println(VenueName);
-
-//                String GigDate = gigJSON.getString("gig_date");
-//                TextView DateView =(TextView)findViewById(R.id.LoactionGigDate);
-//                DateView.setText(GigDate);
 
             } catch (JSONException e) {
 

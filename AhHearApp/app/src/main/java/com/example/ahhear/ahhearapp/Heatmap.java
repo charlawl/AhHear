@@ -255,7 +255,8 @@ public class Heatmap extends AppCompatActivity {
                 TextView volumeheading =(TextView)findViewById(R.id.gigvolume);
                 volumeheading.setText("Gig Volume");
 
-                data.append(AvgString);
+                // Limit the number of decimal places in the result to 2.
+                data.append(String.format("%.2f", AvgString));
 
                 data.append(" | Number Samples: ");
                 String NumString = bandJson.getString("num_samples");
