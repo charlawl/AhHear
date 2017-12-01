@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import ViewComponents.Band;
 import ViewComponents.BandListItem;
 import ViewComponents.DownloadImage;
-import ViewComponents.Venue;
-import ViewComponents.VenueListItem;
 
 public class VenueScore extends AppCompatActivity{
 
@@ -149,7 +147,7 @@ public class VenueScore extends AppCompatActivity{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Intent myIntent = new Intent(view.getContext(), VenueHeatmap.class);
+                Intent myIntent = new Intent(view.getContext(), Heatmap.class);
                 myIntent.putExtra("gigId", result.get(position).getGigid());
                 startActivityForResult(myIntent, 0);
 
