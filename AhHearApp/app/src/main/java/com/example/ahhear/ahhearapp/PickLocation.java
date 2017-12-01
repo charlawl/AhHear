@@ -60,15 +60,15 @@ public class PickLocation extends GigBrowse {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // get gig_id from previous activity.
         gig_id = getIntent().getIntExtra("gig_id", 1);
-//        int gig_id = 10;
         setContentView(R.layout.pick_location);
-//        set dynamic image // uses picasso for better memory management
 
+        // download data from the api asynchronously.
         PickLocation.DownloadGigData downloadGigData = new PickLocation.DownloadGigData(this);
+
+        // try to download data of a single gig.
         try {
-            // this is the url to the API.
-            // Static at the moment but its easy to add which gig were looking at.
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http");
 
@@ -80,6 +80,8 @@ public class PickLocation extends GigBrowse {
             downloadGigData.execute(new URL(builder.toString()));
 
         } catch (MalformedURLException e) {
+
+            // if the url is incorrect toast the error to the user.
             Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
             toast.show();
             e.printStackTrace();
@@ -87,12 +89,10 @@ public class PickLocation extends GigBrowse {
 
         ImageView imageView = (ImageView) findViewById(R.id.floorplan);
 
+        // button logic for the sampling of sound.
         mRecordButton  = findViewById(R.id.button_rec);
         mRecordLabel = findViewById(R.id.textView_record_label);
         mDecibels = findViewById(R.id.textView_sound);
-//        mRecorder.setOutputFile("/dev/null");
-//        mFileName = getExternalCacheDir().getAbsolutePath();
-//        mFileName += "/hear_audio.3gp";
 
         mRecordButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -112,14 +112,13 @@ public class PickLocation extends GigBrowse {
         imageView.setOnTouchListener(addPin);
     }
 
+    // method which records audio.
     private void startRecording() {
         mDecibels.setText("");
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-//        mRecorder.setAudioSamplingRate(44100);
-//        mRecorder.setAudioEncodingBitRate(96000);
         mRecorder.setOutputFile("/dev/null");
         try {
             mRecorder.prepare();
@@ -133,6 +132,7 @@ public class PickLocation extends GigBrowse {
 
     }
 
+    // stops recording and inserts results into personal database.
     private void stopRecording() {
         intent = new Intent(this, DisplayLevel.class);
         intent.putExtra(EXTRA_DECIBEL, amplitudeDb);
@@ -151,6 +151,7 @@ public class PickLocation extends GigBrowse {
         startActivity(intent);
     }
 
+
     private class RecorderTask extends TimerTask {
         Handler myhandler;
         RecorderTask(Handler h)
@@ -161,17 +162,16 @@ public class PickLocation extends GigBrowse {
         public void run() {
             int amplitude = mRecorder.getMaxAmplitude();
             amplitudeDb = 20 * Math.log10((double)Math.abs(amplitude));
-//            Log.e("----------->>>>>>>>>>","MicInfoService amplitude: " + amplitudeDb);
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-//                    System.out.println("------------------*********_____________------------------");
                     mDecibels.setText(String.format("Amplitude : %s", String.format("%.2f", amplitudeDb)));
                 }
             });
         }
     }
 
+    // method to add pin to map.
     private final View.OnTouchListener addPin = new View.OnTouchListener() {
 
         @Override
@@ -184,6 +184,7 @@ public class PickLocation extends GigBrowse {
             } catch (Exception e) {
                 // e.printStackTrace();
             }
+            // don't allow the user to selct on alpha channel.
             if (color == Color.TRANSPARENT)
                 return false;
             else {
@@ -191,6 +192,7 @@ public class PickLocation extends GigBrowse {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
 
+                    // get the selection coordinates of user.
                     float x = event.getX();
                     float y = event.getY();
 
@@ -199,33 +201,24 @@ public class PickLocation extends GigBrowse {
                     ImageView pinview = (ImageView) findViewById(R.id.pin);
                     ImageView floorplanview = (ImageView) findViewById(R.id.floorplan);
 
-
+                    // get the width and height of floorplan...
                     float floorplan_width = floorplanview.getHeight();
                     float floorplan_height = floorplanview.getWidth();
 
-                    int[] location = new int[2];
-                    floorplanview.getLocationOnScreen(location);
-
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
-                    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                    float screenheight = displayMetrics.heightPixels;
-                    float screenwidth = displayMetrics.widthPixels;
-
-                    float horizontaledge = (screenwidth - floorplan_width) / 2;
-
-                    float pin_width = pinview.getMeasuredHeight();
                     float pin_height = pinview.getMeasuredHeight();
 
                     chosen_percent_width = (x / floorplan_height) * 100;
                     chosen_percent_height = (y / floorplan_width) * 100;
-                    if (pinview.getDrawable() == null) {
 
+                    if (pinview.getDrawable() == null) {
                         Drawable res = getResources().getDrawable(imageResource);
                         pinview.setAdjustViewBounds(true);
                         pinview.setImageDrawable(res);
                     }
 
-                    pinview.setX(x); // increase percentage to slip pin left
+                    // adjust the location of the pin based on its size
+                    // the pin isn't in the center of the image.
+                    pinview.setX(x);
                     pinview.setY(y - ((pin_height / 100) * 85));
 
                     break;
@@ -240,6 +233,7 @@ public class PickLocation extends GigBrowse {
         }
     };
 
+    // download from api asynchronously.
     private class DownloadGigData extends AsyncTask<URL, Integer, JSONArray> {
 
         // record this activity as a variable for later.
@@ -250,8 +244,6 @@ public class PickLocation extends GigBrowse {
             this.activity = activity;
         }
 
-        // downloading the data has to be done asynchronous.
-        // this is robbed from charlotte's venue menu.
         protected JSONArray doInBackground(URL... urls) {
 
             JSONArray arr = null;
@@ -271,18 +263,16 @@ public class PickLocation extends GigBrowse {
                     }
 
                     try {
-
-                        // the data comes down as a string
-                        // is parsed as json and added to a 2darray of doubles.
-
                         arr = new JSONArray(sb.toString());
 
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Log.e("AhHere", "exception: " + e.getMessage());
+                        System.out.println("Could not download data from API.");
                     }
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("AhHere", "exception: " + e.getMessage());
+                    System.out.println("Could not make url connection.");
                 }
 
                 // Escape early if cancel() is called
@@ -293,14 +283,12 @@ public class PickLocation extends GigBrowse {
         }
 
         // when the asynchronous download is finished this runs.
-        // displays the heatmap.
         protected void onPostExecute(JSONArray ReturnArray) {
 
             try {
 
                 JSONObject gigJSON = ReturnArray.getJSONObject(0);
                 String VenueId = gigJSON.getString("venue_id");
-                System.out.println(VenueId);
 
                 Uri.Builder builder = new Uri.Builder();
                 builder.scheme("http");
@@ -309,9 +297,11 @@ public class PickLocation extends GigBrowse {
                 builder.appendQueryParameter("id", VenueId);
                 builder.build();
 
+                // use picasso to download images asynchronously
                 ImageView imageView = (ImageView) findViewById(R.id.floorplan);
                 Picasso.with(activity).load(builder.toString()).into(imageView);
 
+                // fill in band name and venue name.
                 String BandName = gigJSON.getString("band_name");
                 TextView bandView = (TextView)findViewById(R.id.LoactionBandName);
                 bandView.setText(BandName);
@@ -319,14 +309,11 @@ public class PickLocation extends GigBrowse {
                 String VenueName = gigJSON.getString("venue_name");
                 TextView venueView=(TextView)findViewById(R.id.LoactionVenueName);
                 venueView.setText(VenueName);
-                System.out.println(VenueName);
 
             } catch (JSONException e) {
-
-                System.out.println("Json error getting band_id");
+                Log.e("AhHere", "exception: " + e.getMessage());
+                System.out.println("Malformed Url.");
             }
-
         }
-
     }
 }

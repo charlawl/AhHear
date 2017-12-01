@@ -286,6 +286,7 @@ public class Heatmap extends AppCompatActivity {
                 dataView.setText(data.toString());
 
             } catch (JSONException e) {
+                Log.e("AhHere", "exception: " + e.getMessage());
                 System.out.println("Json error getting results from return array.");
 
                 String VenueName = "No Samples Available for this Band.";
@@ -323,7 +324,9 @@ public class Heatmap extends AppCompatActivity {
         } catch (MalformedURLException e) {
             Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
             toast.show();
-            e.printStackTrace();
+
+            Log.e("AhHere", "exception: " + e.getMessage());
+            System.out.println("Malformed Url.");
         }
     }
 
