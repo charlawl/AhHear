@@ -33,7 +33,7 @@ import java.util.Map;
 import ca.hss.heatmaplib.HeatMap;
 
 
-public class VenueHeatmap extends AppCompatActivity {
+public class Heatmap extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     private class DownloadHeatData extends AsyncTask<URL, Integer, JSONArray> {
@@ -117,7 +117,6 @@ public class VenueHeatmap extends AppCompatActivity {
 
                 JSONObject bandJson = ReturnArray.getJSONObject(0);
                 String VenueId = bandJson.getString("venue_id");
-                System.out.println(VenueId);
 
                 Uri.Builder builder = new Uri.Builder();
                 builder.scheme("http");
@@ -184,7 +183,6 @@ public class VenueHeatmap extends AppCompatActivity {
                                     try {
                                         JSONObject json = ReturnArray.getJSONObject(i);
 
-                                        System.out.println(json.getString("band_id"));
                                         float xpercent_temp = (float) json.getDouble("xpercent");
                                         float xpercent = xpercent_temp / 100;
 
@@ -196,7 +194,7 @@ public class VenueHeatmap extends AppCompatActivity {
                                         heatMap.addData(point);
 
                                     } catch (JSONException e) {
-                                        System.out.print("JSON Exception. (Line 137 of VenueHeatmap.java)");
+                                        System.out.print("JSON Exception. (Line 137 of Heatmap.java)");
                                     }
                                 }
 
@@ -306,7 +304,7 @@ public class VenueHeatmap extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    
+
     // This method is taken from stackoverflow flow here:
     // https://stackoverflow.com/questions/23475788/how-to-set-multiple-parent-activities-for-using-android-back-button
     // It allows this activity to remember which activity called it.
@@ -321,8 +319,9 @@ public class VenueHeatmap extends AppCompatActivity {
 
     }
 
+    // This method gets called when the find ear plugs button is clicked.
+    // Opens google maps and searches for pharmacies.
     public void onClickBtn(View v) {
-
         Uri searchUri = Uri.parse("geo:0,0?q=pharmacy");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, searchUri);
         mapIntent.setPackage("com.google.android.apps.maps");
