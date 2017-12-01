@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recording_local"
+    android:layout_width="fill_parent"
+    android:layout_height="90dip"
+    android:background="@drawable/locals"
+    android:paddingTop="20dip"
+    android:textAlignment="center"
+    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+    android:textColor="?android:attr/colorForegroundInverse" />

@@ -1,11 +1,11 @@
 package com.example.ahhear.ahhearapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,13 +14,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -29,7 +24,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
+import de.nitri.gauge.Gauge;
 
 public class DisplayLevel extends AppCompatActivity {
     private PostSample postSample;
@@ -43,12 +38,48 @@ public class DisplayLevel extends AppCompatActivity {
         Intent intent = getIntent();
         //TODO: get gig id from intent
 
-
         Bundle bundle = getIntent().getExtras();
-
+//        various levels and their meanings
         final double decibels = bundle.getDouble(PickLocation.EXTRA_DECIBEL);
-        TextView decibelDisplay = findViewById(R.id.textView_decibel);
-        decibelDisplay.setText(Double.toString(decibels));
+        TextView decibelDisplay = findViewById(R.id.value_info);
+        String micValueMeaning;
+        if (decibels <= 10)
+            micValueMeaning = "Hearing threshold";
+        else if(decibels <= 20 && decibels > 10)
+            micValueMeaning = "Rustling leaves in the distance";
+        else if(decibels <=30 && decibels > 20)
+            micValueMeaning = "Background in TV studio";
+        else if(decibels <= 40 && decibels > 30)
+            micValueMeaning = " Quiet bedroom at night";
+        else if(decibels <= 50 && decibels > 40)
+            micValueMeaning = "Quiet library";
+        else if(decibels <= 60 && decibels > 50)
+            micValueMeaning = "Average home";
+        else if(decibels <= 70 && decibels > 60)
+            micValueMeaning = "Conversational speech, 1 m";
+        else if(decibels <= 80 && decibels > 70)
+            micValueMeaning = "Vacuum cleaner, distance 1 m";
+        else if(decibels <= 90 && decibels > 80)
+            micValueMeaning = "Kerbside of busy road, 5 m";
+        else if(decibels <= 100 && decibels > 90)
+            micValueMeaning = "Diesel truck, 10 m away";
+        else if(decibels <= 110 && decibels > 100)
+            micValueMeaning = "Disco, 1 m from speaker";
+        else if(decibels <= 120 && decibels > 110)
+            micValueMeaning = "Chainsaw, 1 m distance";
+        else if(decibels <= 130 && decibels > 120)
+            micValueMeaning = "Threshold of discomfort";
+        else if(decibels <= 140 && decibels > 130)
+            micValueMeaning = "Threshold of pain";
+        else if(decibels <= 150)
+            micValueMeaning = "Jet aircraft, 50 m away";
+        else
+            micValueMeaning = "An Error Occurred";
+
+        decibelDisplay.setText(micValueMeaning);
+//        feed the guage with read value
+        final Gauge gauge = (Gauge) findViewById(R.id.gauge);
+        gauge.moveToValue((float) decibels);
 
         // print the percentage positions from the previous page.
         final int gigId = bundle.getInt(PickLocation.EXTRA_GIGID);
@@ -59,6 +90,7 @@ public class DisplayLevel extends AppCompatActivity {
         System.out.println(chosen_percent_width);
         System.out.println(chosen_percent_height);
         Button button = (Button) findViewById(R.id.postButton);
+//        posts to remote api
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,7 +109,16 @@ public class DisplayLevel extends AppCompatActivity {
         });
 
     }
-
+//    opens google maps
+    public void onClickBtn(View view) {
+        Uri searchUri = Uri.parse("geo:0,0?q=pharmacy");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, searchUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
+    }
+// schema for sample db
     private class PostSample extends AsyncTask<URL, Integer, Integer> {
         private double amplitudeDb;
         private float x, y;

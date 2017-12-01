@@ -52,6 +52,7 @@ public class PickLocation extends GigBrowse {
     public float chosen_percent_height;
     public LocalDataBaseManager localDataBaseManager;
     public int gig_id;
+    public String localVenue;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -134,18 +135,27 @@ public class PickLocation extends GigBrowse {
     // stops recording and inserts results into personal database.
     private void stopRecording() {
         intent = new Intent(this, DisplayLevel.class);
-        intent.putExtra(EXTRA_DECIBEL, amplitudeDb);
-        intent.putExtra(EXTRA_WIDTH, chosen_percent_width);
-        intent.putExtra(EXTRA_HEIGHT, chosen_percent_height);
-        intent.putExtra(EXTRA_GIGID, gig_id);
-
         timer.cancel();
         mRecorder.stop();
         mRecorder.reset();
         mRecorder.release();
         mRecorder = null;
+        if (chosen_percent_height == 0.0f){
+            Toast.makeText(getApplicationContext(), "Please pick a position", Toast.LENGTH_SHORT).show();
+            timer.purge();
+            return;
+        }else if(amplitudeDb <= 0 ){
+            Toast.makeText(getApplicationContext(), "Hold the mic for a bit longer", Toast.LENGTH_SHORT).show();
+            timer.purge();
+            return;
+        }else{
+        intent.putExtra(EXTRA_DECIBEL, amplitudeDb);
+        intent.putExtra(EXTRA_WIDTH, chosen_percent_width);
+        intent.putExtra(EXTRA_HEIGHT, chosen_percent_height);
+        intent.putExtra(EXTRA_GIGID, gig_id);
+        }
         localDataBaseManager = new LocalDataBaseManager(this, "", null, 1);
-        localDataBaseManager.insert_gig_recording("Cold Play", "Olympia", (int) Math.round(amplitudeDb));
+        localDataBaseManager.insert_gig_recording(localVenue, (int)Math.round(amplitudeDb));
 
         startActivity(intent);
     }
@@ -159,12 +169,13 @@ public class PickLocation extends GigBrowse {
         }
 
         public void run() {
-            int amplitude = mRecorder.getMaxAmplitude();
+            final int amplitude = mRecorder.getMaxAmplitude();
             amplitudeDb = 20 * Math.log10((double)Math.abs(amplitude));
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mDecibels.setText(String.format("Amplitude : %s", String.format("%.2f", amplitudeDb)));
+                    if (amplitude > 0)
+                        mDecibels.setText(String.format("Amplitude : %s", String.format("%.2f", amplitudeDb)));
                 }
             });
         }
@@ -307,6 +318,7 @@ public class PickLocation extends GigBrowse {
 
                 String VenueName = gigJSON.getString("venue_name");
                 TextView venueView=(TextView)findViewById(R.id.LoactionVenueName);
+                localVenue = VenueName;
                 venueView.setText(VenueName);
 
             } catch (JSONException e) {
