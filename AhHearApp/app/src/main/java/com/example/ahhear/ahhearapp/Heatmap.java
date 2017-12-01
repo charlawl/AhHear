@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.ArrayMap;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +36,9 @@ import ca.hss.heatmaplib.HeatMap;
 
 public class Heatmap extends AppCompatActivity {
 
+    // Class to download data from API asyncrosnally.
+    // Returns a json array
+    // takes an url and returns the result as a json array.
     @SuppressLint("StaticFieldLeak")
     private class DownloadHeatData extends AsyncTask<URL, Integer, JSONArray> {
 
@@ -68,17 +72,17 @@ public class Heatmap extends AppCompatActivity {
 
                     try {
 
-                        // the data comes down as a string
-                        // is parsed as json and added to a 2darray of doubles.
-
+                        // try to parse the downloaded data.
                         arr = new JSONArray(sb.toString());
 
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Log.e("AhHere", "exception: " + e.getMessage());
+                        System.out.println("Could not download data from API.");
                     }
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("AhHere", "exception: " + e.getMessage());
+                    System.out.println("Could not make url connection.");
                 }
 
                 // Escape early if cancel() is called
@@ -89,13 +93,15 @@ public class Heatmap extends AppCompatActivity {
         }
 
         // when the asynchronous download is finished this runs.
-        // displays the heatmap.
+        // use the downloaded data to display the heatmap and other downloaded information.
         protected void onPostExecute(final JSONArray ReturnArray) {
 
             setContentView(R.layout.heatmap);
 
             try {
 
+                // Try to find the image of the band
+                // using Picasso which is asynchronous.
                 JSONObject bandJson = ReturnArray.getJSONObject(0);
                 String BandId = bandJson.getString("band_id");
 
@@ -110,10 +116,14 @@ public class Heatmap extends AppCompatActivity {
                 Picasso.with(activity).load(builder.toString()).into(BandImage);
 
             } catch (JSONException e) {
+                Log.e("AhHere", "exception: " + e.getMessage());
                 System.out.println("Could not download band image.");
             }
 
             try {
+
+                // Try to find the image of the venue.
+                // using Picasso which is asynchronous.
 
                 JSONObject bandJson = ReturnArray.getJSONObject(0);
                 String VenueId = bandJson.getString("venue_id");
@@ -135,23 +145,23 @@ public class Heatmap extends AppCompatActivity {
                 floorplanbuilder.appendQueryParameter("id", VenueId);
                 floorplanbuilder.build();
 
+                // When venue is finished downloading build the heatmap.
                 ImageView FloorplanImage = (ImageView) findViewById(R.id.heatmapFloorplan);
-//                Picasso.with(activity).load(floorplanbuilder.toString()).into(FloorplanImage);
-
-
                 Picasso.with(activity)
                         .load(floorplanbuilder.toString())
                         .into(FloorplanImage, new com.squareup.picasso.Callback() {
                             @Override
                             public void onSuccess() {
 
+                                // we need to find the height and width of the floorplan so the
+                                // heatmap overlays correctly.
                                 ImageView FloorplanImage = (ImageView) findViewById(R.id.heatmapFloorplan);
                                 float image_height = FloorplanImage.getDrawable().getIntrinsicHeight();
                                 float image_width = FloorplanImage.getDrawable().getIntrinsicWidth();
-
                                 double ratio = image_height / image_width;
 
                                 HeatMap heatMap = findViewById(R.id.heatmap);
+                                // set max loudness (red) for the heatmap.
                                 heatMap.setMinimum(0.0);
                                 heatMap.setMaximum(100.0);
 
@@ -183,18 +193,24 @@ public class Heatmap extends AppCompatActivity {
                                     try {
                                         JSONObject json = ReturnArray.getJSONObject(i);
 
-                                        float xpercent_temp = (float) json.getDouble("xpercent");
-                                        float xpercent = xpercent_temp / 100;
+                                        // get the downloaded values and convert them to a format that
+                                        // the heatmap understands...
+                                        // namely 0.1 == 10%.
+                                        float xpercent_download = (float) json.getDouble("xpercent");
+                                        float xpercent = xpercent_download / 100;
 
-                                        float ypercent_temp = (float) json.getDouble("ypercent");
-                                        float ypercent = ypercent_temp / 100;
+                                        float ypercent_download = (float) json.getDouble("ypercent");
+                                        float ypercent = ypercent_download / 100;
 
                                         double spl = json.getDouble("spl");
+
+                                        // add data to the heatmap point by point.
                                         point = new HeatMap.DataPoint(xpercent, ypercent, spl);
                                         heatMap.addData(point);
 
                                     } catch (JSONException e) {
-                                        System.out.print("JSON Exception. (Line 137 of Heatmap.java)");
+                                        Log.e("AhHere", "exception: " + e.getMessage());
+                                        System.out.print("JSON Exception. Error parsing heatmap data.");
                                     }
                                 }
 
@@ -207,11 +223,13 @@ public class Heatmap extends AppCompatActivity {
                         });
 
             } catch (JSONException e) {
+                Log.e("AhHere", "exception: " + e.getMessage());
                 System.out.println("Could not get floorplan");
             }
 
             try {
 
+                // add data downloaded from the API to views.
                 JSONObject bandJson = ReturnArray.getJSONObject(0);
 
                 String BandName = bandJson.getString("band_name");
@@ -222,7 +240,7 @@ public class Heatmap extends AppCompatActivity {
                 TextView venueView=(TextView)findViewById(R.id.HeatmapVenueName);
                 venueView.setText(VenueName);
 
-
+                // parse the downloaded datetime format.
                 String gigDateString = bandJson.getString("datetime");
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat dt1 = new SimpleDateFormat("HH:mm dd-MM-yyyy");
@@ -235,9 +253,11 @@ public class Heatmap extends AppCompatActivity {
                     dateView.setText(newDateString);
 
                 } catch (ParseException e) {
-                    e.printStackTrace();
+                    Log.e("AhHere", "exception: " + e.getMessage());
+                    System.out.println("Could not parse datetime from API.");
                 }
 
+                // do the math to get the average spl value.
                 StringBuilder data = new StringBuilder();
                 data.append("Average SPL: ");
 
@@ -283,6 +303,7 @@ public class Heatmap extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // get the gig_id sent by the previous activity.
         int gig_id = getIntent().getIntExtra("gigId", 0);
 
         DownloadHeatData downloadHeatData = new DownloadHeatData(this);
