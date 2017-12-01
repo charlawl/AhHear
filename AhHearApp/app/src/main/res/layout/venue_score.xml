@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/colorBackground"
     android:orientation="vertical">
 
     <ScrollView
@@ -19,6 +19,7 @@
 
             <ImageView
                 android:id="@+id/venueImageVenueScorePage"
+                android:paddingTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="@android:dimen/thumbnail_height"
                 android:layout_alignParentStart="true"
@@ -29,8 +30,11 @@
                 android:id="@+id/venueNameVenueScorePage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:gravity="center"
-                android:textColor="#ffffff"
+                android:textColor="#EAEAEA"
+                android:textSize="30dp"
                 android:text="Venue Name" />
 
             <TextView
@@ -38,7 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textColor="#EAEAEA"
                 android:text="Gig Count" />
 
             <TextView
@@ -46,8 +51,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textColor="#EAEAEA"
+                android:paddingBottom="20dp"
                 android:text="Avg / max dB" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".3dp"
+                android:background="#EAEAEA"/>
 
             <ListView
                 android:id="@+id/venuesListVenueScorePage"
@@ -57,12 +69,20 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:dividerHeight=".3dip"
+                android:divider="#EAEAEA"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
             </ListView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".3dp"
+                android:background="#EAEAEA"/>
 
         </LinearLayout>
     </ScrollView>

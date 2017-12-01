@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -191,24 +192,50 @@ public class PickLocation extends GigBrowse {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
 
+//                        pixels
                         float x = event.getX();
                         float y = event.getY();
+
+                        System.out.println(x);
+                        System.out.println(y);
+                        System.out.println(" ");
 
                         String uri = "@drawable/red_pin";
                         int imageResource = getResources().getIdentifier(uri, null, getPackageName());
                         ImageView pinview = (ImageView) findViewById(R.id.pin);
                         ImageView floorplanview = (ImageView) findViewById(R.id.floorplan);
 
-                        float floorplan_width = floorplanview.getMeasuredHeight();
-                        float floorplan_height = floorplanview.getMeasuredWidth();
+
+                        float floorplan_width = floorplanview.getHeight();
+                        float floorplan_height = floorplanview.getWidth();
+
+                        int[] location = new int[2];
+                        floorplanview.getLocationOnScreen(location);
+
+                        System.out.println(location[0]);
+                        System.out.println(location[1]);
+                        System.out.println(" ");
+
+                        DisplayMetrics displayMetrics = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                        float screenheight = displayMetrics.heightPixels;
+                        float screenwidth = displayMetrics.widthPixels;
+
+                        float horizontaledge = (screenwidth - floorplan_width) / 2;
+
                         float pin_width = pinview.getMeasuredHeight();
                         float pin_height = pinview.getMeasuredHeight();
 
-                        chosen_percent_width = (x*100)/floorplan_width;
-                        chosen_percent_height = (y*100)/floorplan_height;
+                        System.out.println(floorplan_width);
+                        System.out.println(floorplan_height);
+                        System.out.println(" ");
+
+                        chosen_percent_width = (x/floorplan_width)*100;
+                        chosen_percent_height = (y/floorplan_height)*100;
 
                         System.out.println(chosen_percent_width);
                         System.out.println(chosen_percent_height);
+                        System.out.println(" ");
 
                         if(pinview.getDrawable() == null) {
 
@@ -217,8 +244,8 @@ public class PickLocation extends GigBrowse {
                             pinview.setImageDrawable(res);
                         }
 
-                        pinview.setX(x - ((pin_width / 100) * 26));
-                        pinview.setY(y-((pin_height / 100) * 86));
+                        pinview.setX(x + ((pin_width / 100) * 15));
+                        pinview.setY(y - ((pin_height / 100) * 75));
 
                         break;
 
@@ -315,9 +342,9 @@ public class PickLocation extends GigBrowse {
                 venueView.setText(VenueName);
                 System.out.println(VenueName);
 
-                String GigDate = gigJSON.getString("gig_date");
-                TextView DateView =(TextView)findViewById(R.id.LoactionGigDate);
-                DateView.setText(GigDate);
+//                String GigDate = gigJSON.getString("gig_date");
+//                TextView DateView =(TextView)findViewById(R.id.LoactionGigDate);
+//                DateView.setText(GigDate);
 
             } catch (JSONException e) {
                 System.out.println("Json error getting band_id");

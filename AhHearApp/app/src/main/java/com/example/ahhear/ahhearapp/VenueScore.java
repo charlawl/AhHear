@@ -93,8 +93,8 @@ public class VenueScore extends AppCompatActivity{
         }
 
         protected void onPostExecute(ArrayList<Band> result) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Bands downloaded", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getApplicationContext(), "Bands downloaded", Toast.LENGTH_SHORT);
+//            toast.show();
 
             listItem = new BandListItem(result, getApplicationContext());
             listView.setAdapter(listItem);

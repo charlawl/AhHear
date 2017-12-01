@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:orientation="vertical">
 
     <ScrollView
@@ -18,6 +19,8 @@
 
             <ImageView
                 android:id="@+id/bandImageBandScorePage"
+                android:paddingTop="30dp"
+                android:paddingBottom="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="@android:dimen/thumbnail_height"
                 android:layout_alignParentStart="true"
@@ -28,15 +31,20 @@
                 android:id="@+id/bandNameBandScorePage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#ffffff"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#EAEAEA"
                 android:gravity="center"
+                android:textSize="30dp"
                 android:text="Band Name" />
 
             <TextView
                 android:id="@+id/bandGigCountBandScorePage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#ffffff"
+                android:textColor="#EAEAEA"
+                android:textSize="18dp"
+                android:textStyle="italic"
                 android:gravity="center"
                 android:text="Gig Count" />
 
@@ -44,18 +52,28 @@
                 android:id="@+id/bandDbBandScorePage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#ffffff"
+                android:textColor="#EAEAEA"
+                android:textSize="18dp"
+                android:textStyle="italic"
                 android:gravity="center"
+                android:paddingBottom="20dp"
                 android:text="Avg / max dB" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".3dp"
+                android:background="#EAEAEA"/>
 
             <ListView
                 android:id="@+id/venuesListBandScorePage"
                 android:layout_width="match_parent"
-                android:layout_height="441dp"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:dividerHeight=".3dip"
+                android:divider="#EAEAEA"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,11 +81,13 @@
 
             </ListView>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".3dp"
+                android:background="#EAEAEA"/>
+
         </LinearLayout>
 
     </ScrollView>
 
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </android.widget.LinearLayout>
