@@ -11,11 +11,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,12 +22,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-
 import ViewComponents.Band;
 import ViewComponents.BandListItem;
 import ViewComponents.DownloadImage;
 import ViewComponents.Venue;
 import ViewComponents.VenueListItem;
+
 
 public class BandScore extends AppCompatActivity{
 
@@ -38,13 +36,14 @@ public class BandScore extends AppCompatActivity{
     private static VenueListItem listItem;
     ArrayList<Venue> result = new ArrayList<>();
 
+    /**
+     * Class for downloading information about venues from the API in the background
+     */
     class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
         private Activity activity;
-
         public DownloadVenuesTask(Activity activity) {
             this.activity = activity;
         }
-
         protected ArrayList<Venue> doInBackground(URL... urls) {
             int count = urls.length;
 
@@ -62,6 +61,7 @@ public class BandScore extends AppCompatActivity{
                         sb.append(line).append('\n');
                     }
 
+                    // Loop through our JSON results, create venue objects & add to arraylist
                     try {
                         JSONArray arr = new JSONArray(sb.toString());
                         for (int i = 0; i < arr.length(); i++) {
@@ -72,7 +72,6 @@ public class BandScore extends AppCompatActivity{
                             int gigId = venue.isNull("gig_id")? 0: venue.getInt("gig_id");
                             double locationLng = venue.isNull("location_lng")? 0: venue.getDouble("location_lng");
                             double locationLat = venue.isNull("location_lat")? 0: venue.getDouble("location_lat");
-
                             result.add(new Venue(
                                     venue.getInt("venue_id"),
                                     venue.getString("venue_name"),
@@ -97,6 +96,10 @@ public class BandScore extends AppCompatActivity{
             return result;
         }
 
+        /**
+         * Display confirmation toast to user after venue info is downloaded & set listview item to venue info
+         * @param result arraylist of venue information to be put in listview
+         */
         protected void onPostExecute(ArrayList<Venue> result) {
             Toast toast = Toast.makeText(getApplicationContext(), "Venues downloaded", Toast.LENGTH_SHORT);
             toast.show();
@@ -110,16 +113,20 @@ public class BandScore extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.band_score);
+
+        // Remove information on band selected from intent from band browse page
         int id = getIntent().getIntExtra("bandId", 0);
         String name = getIntent().getStringExtra("bandName");
         int gigs = getIntent().getIntExtra("bandNumGigs", 0);
         int samples = getIntent().getIntExtra("bandNumSamples", 0);
         int db = getIntent().getIntExtra("bandDecibels", 0);
 
+        // Setup object to display band information
         TextView bandNameBandScorePage = (TextView)findViewById(R.id.bandNameBandScorePage);
         TextView bandGigCountBandScorePage = (TextView)findViewById(R.id.bandGigCountBandScorePage);
         TextView bandDbBandScorePage = (TextView)findViewById(R.id.bandDbBandScorePage);
 
+        // Enter information received from band browse page into text views
         bandNameBandScorePage.setText(name);
         bandGigCountBandScorePage.setText(getString(R.string.gigs, gigs));
         bandDbBandScorePage.setText(getString(R.string.decibelsAvg, db));
@@ -138,6 +145,7 @@ public class BandScore extends AppCompatActivity{
         DownloadVenuesTask downloadVenuesTask = new DownloadVenuesTask(this);
 
         try {
+            // Download band information from the API
             downloadVenuesTask.execute(
                     new URL("http", "gavs.work", 8000, "gigs?band="+id));
 
@@ -147,11 +155,12 @@ public class BandScore extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        // Code to open the venue score page after clicking one of the list view items
+        // Code to open the heatmap after clicking one of the list view items
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Intent myIntent = new Intent(view.getContext(), VenueHeatmap.class);
+                // Need to pass gig id so heatmap can open relevant page
                 myIntent.putExtra("gigId", result.get(position).getGigid());
                 startActivityForResult(myIntent, 0);
             }

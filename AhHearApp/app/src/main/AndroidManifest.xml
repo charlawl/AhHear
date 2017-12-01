@@ -9,7 +9,6 @@
     <!-- Permission to access users geolocation -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -70,7 +69,7 @@
 
         <activity
             android:name=".DisplayLevel"
-            android:parentActivityName=".PickLocation">
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".MyRecordings"
