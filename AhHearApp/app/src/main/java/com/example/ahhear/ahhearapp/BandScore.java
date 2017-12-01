@@ -98,8 +98,8 @@ public class BandScore extends AppCompatActivity{
         }
 
         protected void onPostExecute(ArrayList<Venue> result) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Venues downloaded", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getApplicationContext(), "Venues downloaded", Toast.LENGTH_SHORT);
+//            toast.show();
 
             listItem = new VenueListItem(result, getApplicationContext());
             listView.setAdapter(listItem);

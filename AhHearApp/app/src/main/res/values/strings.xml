@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AhHearApp</string>
+    <string name="app_name">LoudSense</string>
     <string name="bands">Browse Bands</string>
     <string name="venues">Browse Venues</string>
     <string name="gig">Gig</string>
