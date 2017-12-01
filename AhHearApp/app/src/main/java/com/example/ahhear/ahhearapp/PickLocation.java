@@ -189,72 +189,71 @@ public class PickLocation extends GigBrowse {
                 return false;
             else {
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
 
 //                        pixels
-                        float x = event.getX();
-                        float y = event.getY();
+                    float x = event.getX();
+                    float y = event.getY();
 
-                        System.out.println(x);
-                        System.out.println(y);
-                        System.out.println(" ");
+                    System.out.println("Curser x and y");
+                    System.out.println(x); // 1329
+                    System.out.println(y);
+                    System.out.println(" ");
 
-                        String uri = "@drawable/red_pin";
-                        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-                        ImageView pinview = (ImageView) findViewById(R.id.pin);
-                        ImageView floorplanview = (ImageView) findViewById(R.id.floorplan);
+                    String uri = "@drawable/red_pin";
+                    int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                    ImageView pinview = (ImageView) findViewById(R.id.pin);
+                    ImageView floorplanview = (ImageView) findViewById(R.id.floorplan);
 
 
-                        float floorplan_width = floorplanview.getHeight();
-                        float floorplan_height = floorplanview.getWidth();
+                    float floorplan_width = floorplanview.getHeight();
+                    float floorplan_height = floorplanview.getWidth();
 
-                        int[] location = new int[2];
-                        floorplanview.getLocationOnScreen(location);
+                    int[] location = new int[2];
+                    floorplanview.getLocationOnScreen(location);
 
-                        System.out.println(location[0]);
-                        System.out.println(location[1]);
-                        System.out.println(" ");
+                    System.out.println("Floorplan View Location On Screen");
+                    System.out.println(location[0]);
+                    System.out.println(location[1]);
+                    System.out.println(" ");
 
-                        DisplayMetrics displayMetrics = new DisplayMetrics();
-                        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                        float screenheight = displayMetrics.heightPixels;
-                        float screenwidth = displayMetrics.widthPixels;
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                    float screenheight = displayMetrics.heightPixels;
+                    float screenwidth = displayMetrics.widthPixels;
 
-                        float horizontaledge = (screenwidth - floorplan_width) / 2;
+                    float horizontaledge = (screenwidth - floorplan_width) / 2;
 
-                        float pin_width = pinview.getMeasuredHeight();
-                        float pin_height = pinview.getMeasuredHeight();
+                    float pin_width = pinview.getMeasuredHeight();
+                    float pin_height = pinview.getMeasuredHeight();
 
-                        System.out.println(floorplan_width);
-                        System.out.println(floorplan_height);
-                        System.out.println(" ");
+                    System.out.println("Floorplan Width and Height");
+                    System.out.println(floorplan_width);
+                    System.out.println(floorplan_height);  //1330
+                    System.out.println(" ");
 
-                        chosen_percent_width = (x/floorplan_width)*100;
-                        chosen_percent_height = (y/floorplan_height)*100;
+                    chosen_percent_width = (x / floorplan_height) * 100;
+                    chosen_percent_height = (y / floorplan_width) * 100;
+                    if (pinview.getDrawable() == null) {
 
-                        System.out.println(chosen_percent_width);
-                        System.out.println(chosen_percent_height);
-                        System.out.println(" ");
+                        Drawable res = getResources().getDrawable(imageResource);
+                        pinview.setAdjustViewBounds(true);
+                        pinview.setImageDrawable(res);
+                    }
 
-                        if(pinview.getDrawable() == null) {
+                    pinview.setX(x); // increase percentage to slip pin left
+                    pinview.setY(y - ((pin_height / 100) * 85));
 
-                            Drawable res = getResources().getDrawable(imageResource);
-                            pinview.setAdjustViewBounds(true);
-                            pinview.setImageDrawable(res);
-                        }
+                    break;
 
-                        pinview.setX(x + ((pin_width / 100) * 15));
-                        pinview.setY(y - ((pin_height / 100) * 75));
-
-                        break;
-
-                    default:
-                        break;
-                }
-                return true;
-
+                default:
+                    break;
             }
+            return true;
+
+        }
+
         }
     };
 
@@ -328,10 +327,7 @@ public class PickLocation extends GigBrowse {
                 builder.build();
 
                 ImageView imageView = (ImageView) findViewById(R.id.floorplan);
-
-                Picasso.with(activity)
-                        .load(builder.toString())
-                        .into(imageView);
+                Picasso.with(activity).load(builder.toString()).into(imageView);
 
                 String BandName = gigJSON.getString("band_name");
                 TextView bandView = (TextView)findViewById(R.id.LoactionBandName);
@@ -347,6 +343,7 @@ public class PickLocation extends GigBrowse {
 //                DateView.setText(GigDate);
 
             } catch (JSONException e) {
+
                 System.out.println("Json error getting band_id");
             }
 

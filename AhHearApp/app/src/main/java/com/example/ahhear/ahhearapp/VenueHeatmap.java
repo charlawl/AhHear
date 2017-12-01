@@ -113,7 +113,7 @@ public class VenueHeatmap extends AppCompatActivity {
                 Picasso.with(activity).load(builder.toString()).into(BandImage);
 
             } catch (JSONException e) {
-                System.out.println("Json error getting band_id");
+                System.out.println("Could not download band image.");
             }
 
             try {
@@ -212,7 +212,7 @@ public class VenueHeatmap extends AppCompatActivity {
                         });
 
             } catch (JSONException e) {
-                System.out.println("Json error getting venue_id");
+                System.out.println("Could not get floorplan");
             }
 
             try {
@@ -256,6 +256,10 @@ public class VenueHeatmap extends AppCompatActivity {
                     AvgString = (float) val;
                 }
 
+
+                TextView volumeheading =(TextView)findViewById(R.id.gigvolume);
+                volumeheading.setText("Gig Volume");
+
                 data.append(AvgString);
 
                 data.append(" | Number Samples: ");
@@ -266,7 +270,13 @@ public class VenueHeatmap extends AppCompatActivity {
                 dataView.setText(data.toString());
 
             } catch (JSONException e) {
-                System.out.println("Json error getting venue_id");
+                System.out.println("Json error getting results from return array.");
+
+                String VenueName = "No Samples Available for this Band.";
+                TextView venueView=(TextView)findViewById(R.id.HeatmapVenueName);
+                venueView.setText(VenueName);
+
+
             }
 
         }
