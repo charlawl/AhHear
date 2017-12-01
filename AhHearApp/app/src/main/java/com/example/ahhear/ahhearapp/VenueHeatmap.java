@@ -2,19 +2,16 @@ package com.example.ahhear.ahhearapp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.ArrayMap;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -308,6 +305,20 @@ public class VenueHeatmap extends AppCompatActivity {
             toast.show();
             e.printStackTrace();
         }
+    }
+    
+    // This method is taken from stackoverflow flow here:
+    // https://stackoverflow.com/questions/23475788/how-to-set-multiple-parent-activities-for-using-android-back-button
+    // It allows this activity to remember which activity called it.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return  true;
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 
     public void onClickBtn(View v) {
