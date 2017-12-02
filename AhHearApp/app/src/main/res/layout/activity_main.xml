@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gig_background"
+    android:scaleType="centerCrop"
     tools:context="com.example.ahhear.ahhearapp.MainActivity">
 
     <Button
         android:id="@+id/home_venues_btn"
-        android:layout_width="213dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="291dp"
+        android:layout_width="250dip"
+        android:layout_height="40dip"
+        android:layout_marginTop="420dp"
         android:text="@string/venues"
+        android:textColor="#FFF"
+        android:background="@drawable/bluebutton"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,10 +23,12 @@
 
     <Button
         android:id="@+id/home_bands_btn"
-        android:layout_width="213dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="250dip"
+        android:layout_height="40dip"
+        android:layout_marginTop="20dp"
         android:text="@string/bands"
+        android:textColor="#FFF"
+        android:background="@drawable/bluebutton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,15 +36,26 @@
         app:layout_constraintTop_toBottomOf="@+id/home_venues_btn"
         app:layout_constraintVertical_bias="0.005" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/checkthevolume"
+        android:scaleType="fitXY"
+        android:layout_marginBottom="230dp"
+        app:layout_constraintBottom_toTopOf="@+id/home_venues_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
     <Button
         android:id="@+id/home_record_btn"
-        android:layout_width="77dp"
-        android:layout_height="76dp"
-        android:layout_marginBottom="108dp"
-        android:background="@drawable/drawable_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:background="@drawable/mic_rollerover_main"
         android:elevation="6dp"
+        android:layout_marginBottom="260dp"
         app:layout_constraintBottom_toTopOf="@+id/home_venues_btn"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

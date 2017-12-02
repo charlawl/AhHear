@@ -22,8 +22,8 @@ public class LocalDataBaseManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE MY_GIGS(ID INTEGER PRIMARY KEY AUTOINCREMENT, GIGDATE TEXT, BAND TEXT, VENUE TEXT, SPL INTEGER)");
-
+        db.execSQL("DROP TABLE IF EXISTS MY_GIGS");
+        db.execSQL("CREATE TABLE MY_GIGS(ID INTEGER PRIMARY KEY AUTOINCREMENT, GIGDATE TEXT, VENUE TEXT, SPL INTEGER)");
     }
 
     @Override
@@ -31,22 +31,21 @@ public class LocalDataBaseManager extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS MY_GIGS");
         onCreate(db);
     }
-    public void insert_gig_recording(String band, String venue, int spl){
+    public void insert_gig_recording(String venue, int spl){
         // Format the current time.
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd G 'at' hh:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd 'on a' E 'at' hh:mm:ss");
         Date currentTime_1 = new Date();
         String dateString = formatter.format(currentTime_1);
         ContentValues contentValues = new ContentValues();
         contentValues.put("GIGDATE", dateString);
-        contentValues.put("BAND", band);
         contentValues.put("VENUE", venue);
         contentValues.put("SPL", spl);
         this.getWritableDatabase().insertOrThrow("MY_GIGS","", contentValues);
     }
+//     get all the gigs from local db
     public Cursor list_my_gigs(){
         Cursor cursor;
         cursor = this.getReadableDatabase().rawQuery("SELECT * FROM MY_GIGS", null);
-//        cursor.close();
         return cursor;
     }
 }

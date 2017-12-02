@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import ViewComponents.Band;
 import ViewComponents.BandListItem;
 import ViewComponents.DownloadImage;
-import ViewComponents.Venue;
-import ViewComponents.VenueListItem;
 
 public class VenueScore extends AppCompatActivity{
 
@@ -99,8 +97,8 @@ public class VenueScore extends AppCompatActivity{
          * @param result arraylist of band information to be put in listview
          */
         protected void onPostExecute(ArrayList<Band> result) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Bands downloaded", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getApplicationContext(), "Bands downloaded", Toast.LENGTH_SHORT);
+//            toast.show();
 
             listItem = new BandListItem(result, getApplicationContext());
             listView.setAdapter(listItem);
@@ -159,8 +157,7 @@ public class VenueScore extends AppCompatActivity{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Intent myIntent = new Intent(view.getContext(), VenueHeatmap.class);
-                // Need to pass gig id so heatmap can open relevant page
+                Intent myIntent = new Intent(view.getContext(), Heatmap.class);
                 myIntent.putExtra("gigId", result.get(position).getGigid());
                 startActivityForResult(myIntent, 0);
 

@@ -101,8 +101,8 @@ public class BandBrowse extends AppCompatActivity {
          * @param result arraylist of band information to be put in listview
          */
         protected void onPostExecute(ArrayList<Band> result) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Bands downloaded", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getApplicationContext(), "Bands downloaded", Toast.LENGTH_SHORT);
+//            toast.show();
 
             listItem = new BandListItem(result, getApplicationContext());
             listView.setAdapter(listItem);
@@ -125,8 +125,8 @@ public class BandBrowse extends AppCompatActivity {
                     new URL("http", "gavs.work", 8000, "bands_list"));
 
         } catch (MalformedURLException e) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT);
+//            toast.show();
             e.printStackTrace();
         }
 

@@ -23,6 +23,7 @@
         android:layout_toEndOf="@+id/gigImage"
         android:contentDescription="@string/gig"
         android:text="Gig Name"
+        android:textSize="16dp"
         android:textAlignment="center" />
 
 

@@ -101,8 +101,8 @@ public class BandScore extends AppCompatActivity{
          * @param result arraylist of venue information to be put in listview
          */
         protected void onPostExecute(ArrayList<Venue> result) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Venues downloaded", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getApplicationContext(), "Venues downloaded", Toast.LENGTH_SHORT);
+//            toast.show();
 
             listItem = new VenueListItem(result, getApplicationContext());
             listView.setAdapter(listItem);
@@ -159,8 +159,7 @@ public class BandScore extends AppCompatActivity{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Intent myIntent = new Intent(view.getContext(), VenueHeatmap.class);
-                // Need to pass gig id so heatmap can open relevant page
+                Intent myIntent = new Intent(view.getContext(), Heatmap.class);
                 myIntent.putExtra("gigId", result.get(position).getGigid());
                 startActivityForResult(myIntent, 0);
             }

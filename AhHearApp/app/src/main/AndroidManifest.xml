@@ -59,11 +59,7 @@
         </activity>
 
         <activity
-            android:name=".BandVenueHeatmap">
-        </activity>
-
-        <activity
-            android:name=".VenueHeatmap"
+            android:name=".Heatmap"
             android:parentActivityName=".BandBrowse">
         </activity>
 
