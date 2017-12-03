@@ -33,9 +33,12 @@ public class VenueBrowse extends AppCompatActivity {
     private static VenueListItem listItem;
     ArrayList<Venue> result = new ArrayList<>();
 
+
     /**
      * Class for downloading information about venues from the API in the background
+     background task to connect to the API as cannot connect to the internet on the main thread - using the AsyncTask class
      */
+
     class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
         private Activity activity;
 
@@ -46,6 +49,7 @@ public class VenueBrowse extends AppCompatActivity {
         protected ArrayList<Venue> doInBackground(URL... urls) {
             int count = urls.length;
 
+//          connecting to the API and reading in the JSON
             for (URL url : urls) {
                 try {
                     URLConnection urlConnection = url.openConnection();
@@ -59,6 +63,7 @@ public class VenueBrowse extends AppCompatActivity {
                     while ((line = reader.readLine()) != null) {
                         sb.append(line).append('\n');
                     }
+
 
                     // Loop through our JSON results, create venue objects & add to arraylist
                     try {

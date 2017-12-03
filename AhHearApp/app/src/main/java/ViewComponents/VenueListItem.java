@@ -40,6 +40,7 @@ public class VenueListItem extends ArrayAdapter<Venue> {
         ViewHolder viewHolder;
         final View result;
 
+//      taking data and inserting them in the XML views
         if(convertView == null){
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -66,6 +67,7 @@ public class VenueListItem extends ArrayAdapter<Venue> {
 
         DownloadImage downloadVenueImage = new DownloadImage(viewHolder.venueImgView);
 
+//      connecting to the API to download the images for the venues
         try {
             downloadVenueImage.execute(new URL("http", "gavs.work", 8000, "venue_image?id="+venue.getId()));
         } catch (MalformedURLException e) {
