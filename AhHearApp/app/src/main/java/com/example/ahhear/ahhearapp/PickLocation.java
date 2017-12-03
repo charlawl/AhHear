@@ -1,8 +1,12 @@
 package com.example.ahhear.ahhearapp;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -11,6 +15,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,10 +24,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,13 +62,14 @@ public class PickLocation extends GigBrowse {
     public LocalDataBaseManager localDataBaseManager;
     public int gig_id;
     public String localVenue;
+    private final int REQUEST_PERMISSION_PHONE_STATE = 1;
 
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        showPhonePermission();
         // get gig_id from previous activity.
         gig_id = getIntent().getIntExtra("gig_id", 1);
         setContentView(R.layout.pick_location);
@@ -180,7 +190,55 @@ public class PickLocation extends GigBrowse {
             });
         }
     }
+    private void showPhonePermission() {
+        int permissionCheck = ContextCompat.checkSelfPermission(
+                this, Manifest.permission.RECORD_AUDIO);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.RECORD_AUDIO)) {
+                showExplanation("Permission Needed", "We need access to your microphone :)", Manifest.permission.RECORD_AUDIO, REQUEST_PERMISSION_PHONE_STATE);
+            } else {
+                requestPermission(Manifest.permission.RECORD_AUDIO, REQUEST_PERMISSION_PHONE_STATE);
+            }
+        } else {
+            Toast.makeText(PickLocation.this, "Permission already Granted!", Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode,
+            String permissions[],
+            int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION_PHONE_STATE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(PickLocation.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(PickLocation.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                }
+        }
+    }
 
+    private void showExplanation(String title,
+                                 String message,
+                                 final String permission,
+                                 final int permissionRequestCode) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        requestPermission(permission, permissionRequestCode);
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void requestPermission(String permissionName, int permissionRequestCode) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{permissionName}, permissionRequestCode);
+    }
     // method to add pin to map.
     private final View.OnTouchListener addPin = new View.OnTouchListener() {
 
