@@ -75,7 +75,7 @@ public class DisplayLevel extends AppCompatActivity {
         else
             micValueMeaning = "An Error Occurred";
 
-        decibelDisplay.setText(micValueMeaning);
+        decibelDisplay.setText("Sounds like: " + micValueMeaning);
 //        feed the guage with read value
         final Gauge gauge = (Gauge) findViewById(R.id.gauge);
         gauge.moveToValue((float) decibels);
