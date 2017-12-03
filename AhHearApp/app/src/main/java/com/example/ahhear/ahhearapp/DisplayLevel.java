@@ -214,7 +214,7 @@ public class DisplayLevel extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer result){
-            Toast toast = Toast.makeText(getApplicationContext(), "Results posted " + String.valueOf(result), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Results submitted! " , Toast.LENGTH_SHORT);
             toast.show();
         }
 
