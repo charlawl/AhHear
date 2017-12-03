@@ -37,15 +37,17 @@ public class BandBrowse extends AppCompatActivity {
     private static BandListItem listItem;
     ArrayList<Band> result = new ArrayList<>();
 
+//  background task to connect to the API as cannot connect to the internet on the main thread - using the AsyncTask class
     private class DownloadBandsTask extends AsyncTask<URL, Integer, ArrayList<Band>> {
         private Activity activity;
         public DownloadBandsTask(Activity activity){
             this.activity = activity;
         }
+
         protected ArrayList<Band> doInBackground(URL... urls) {
             int count = urls.length;
 
-
+//          connecting to the API and reading in the JSON
             for (URL url : urls) {
                 try {
                     URLConnection urlConnection = url.openConnection();
@@ -60,6 +62,7 @@ public class BandBrowse extends AppCompatActivity {
                         sb.append(line).append('\n');
                     }
 
+//                  populating the number of samples, number of gigs etc. by looping through the JSON from the API
                     try {
                         JSONArray arr = new JSONArray(sb.toString());
                         for(int i = 0; i < arr.length(); i++){

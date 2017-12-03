@@ -33,6 +33,7 @@ public class VenueBrowse extends AppCompatActivity {
     private static VenueListItem listItem;
     ArrayList<Venue> result = new ArrayList<>();
 
+    //  background task to connect to the API as cannot connect to the internet on the main thread - using the AsyncTask class
     class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
         private Activity activity;
 
@@ -43,6 +44,7 @@ public class VenueBrowse extends AppCompatActivity {
         protected ArrayList<Venue> doInBackground(URL... urls) {
             int count = urls.length;
 
+//          connecting to the API and reading in the JSON
             for (URL url : urls) {
                 try {
                     URLConnection urlConnection = url.openConnection();
@@ -57,6 +59,7 @@ public class VenueBrowse extends AppCompatActivity {
                         sb.append(line).append('\n');
                     }
 
+//                  populating the number of samples, number of gigs etc. by looping through the JSON from the API
                     try {
                         JSONArray arr = new JSONArray(sb.toString());
                         for (int i = 0; i < arr.length(); i++) {

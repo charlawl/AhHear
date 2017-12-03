@@ -36,7 +36,6 @@ public class DisplayLevel extends AppCompatActivity {
         setContentView(R.layout.display_levels);
 
         Intent intent = getIntent();
-        //TODO: get gig id from intent
 
         Bundle bundle = getIntent().getExtras();
 //        various levels and their meanings

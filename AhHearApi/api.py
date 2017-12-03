@@ -17,36 +17,6 @@ Session = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
 
 
-# Following code populates the database with the csv files.
-# session = Session()
-# with open('data/bands.csv', 'rt', encoding='utf-8') as file:
-# 	for line in file:
-# 		_id, name, img = line.strip().split(',')
-# 		band = Band(name=name, img=img)
-# 		session.add(band)
-
-# with open('data/venues.csv', 'rt', encoding='utf-8') as file:
-# 	for line in file:
-# 		_id, name, lat, lng, img = line.strip().split(',')
-# 		venue = Venue(name=name, location_lat=lat, location_lng=lng, img=img)
-# 		session.add(venue)
-
-# with open('data/gigs.csv', 'rt', encoding='utf-8') as file:
-# 	for line in file:
-# 		inputdatetime, name, venue = line.split(',')
-# 		parsed_datetime = datetime.datetime.strptime(inputdatetime, '%d-%m-%Y %H:%M')
-# 		bandsearch = session.query(Band).filter_by(name = name).first()
-# 		gig = Gig(datetime=parsed_datetime, band_id=bandsearch.id, venue_id=venue)
-# 		session.add(gig)
-
-# with open('data/recordings.csv', 'rt', encoding='utf-8') as file:
-# 	for line in file:
-# 		gig_id, spl, xpercent, ypercent = line.split(',')
-# 		recording = Recording(spl=spl, xpercent=xpercent, ypercent=ypercent, gig_id=gig_id)
-# 		session.add(recording)
-# session.commit()
-
-
 @contextmanager
 def session_scope():
 	session = Session()
@@ -59,6 +29,7 @@ def session_scope():
 	finally:
 		session.close()
 
+# A function which query's the appropriate table given a table as a parameter
 def get_list_item(cls):
 
 	with session_scope() as session:
@@ -80,20 +51,26 @@ def get_list_item(cls):
 
 	return [row._asdict() for row in final_query]
 
+# Uses the get_list_item function to query the venues table to return a list of venues
 @hug.get('/venues_list', output=hug.output_format.pretty_json)
 def venues_list():
 	return get_list_item(Venue)
-		
+
+# Uses the get_list_item function to query the bands table to return a list of venues
 @hug.get('/bands_list', output=hug.output_format.pretty_json)
 def bands_list():
 	return get_list_item(Band)
 
+# Returns the details of a single gig when a gig_id is provided
 @hug.get('/single_gig', output=hug.output_format.pretty_json)
 def bands_list(gig_id:int):
 	session = Session()
 	result = session.query(Gig.datetime.label("gig_date"), Band.name.label("band_name"), Venue.name.label("venue_name"), Venue.id.label("venue_id")).join(Band, Venue).filter(Gig.id == gig_id).all()
 	return [row._asdict() for row in result]
 
+# returns a list of all gigs if no ids passed, if a venue id is passed it returns a list of gigs for that venue, 
+# and if a band id is passed. The queries are divided out into subqueries which are then joined in the variable
+# final query on line 99. 
 @hug.get('/gigs', output=hug.output_format.pretty_json)
 def gigs(venue: int=None, band: int=None):
 	session = Session()

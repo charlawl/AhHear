@@ -40,6 +40,7 @@ public class BandListItem extends ArrayAdapter<Band> {
         ViewHolder viewHolder;
         final View result;
 
+//      taking data from the API and inserting it into the XML views
         if(convertView == null){
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -67,6 +68,7 @@ public class BandListItem extends ArrayAdapter<Band> {
 
         DownloadImage downloadBandImage = new DownloadImage(viewHolder.bandImgView);
 
+//      connecting to the API to download the band images 
         try {
             downloadBandImage.execute(new URL("http", "gavs.work", 8000, "band_image?id="+band.getId()));
         } catch (MalformedURLException e) {

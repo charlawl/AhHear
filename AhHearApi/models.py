@@ -4,10 +4,11 @@ from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
+# Below is the code which instantiates the schema in the database. There is a table for Bands, Venues, Gigs and 
+# Recordings
 class Band(Base):
 	__tablename__ = 'band'
 	id = Column(Integer, primary_key=True)
-
 	name = Column(String, nullable=False)
 	img = Column(String, nullable=False)
 	gigs = relationship('Gig', back_populates='band')
@@ -27,7 +28,6 @@ class Gig(Base):
 	datetime = Column(DateTime, nullable=False)
 	venue_id = Column(Integer, ForeignKey('venue.id'))
 	venue = relationship('Venue', back_populates='gigs')
-
 	band_id = Column(Integer, ForeignKey('band.id'))
 	band = relationship('Band', back_populates='gigs')
 	recordings = relationship('Recording', back_populates='gig')
@@ -38,6 +38,5 @@ class Recording(Base):
 	spl = Column(Float, nullable=False)
 	xpercent = Column(Float, nullable=False)
 	ypercent = Column(Float, nullable=False)
-	# gig_id = Column(Integer, ForeignKey('gig.id'))
 	gig_id = Column(Integer, ForeignKey('gig.id'))
 	gig = relationship('Gig', back_populates='recordings')
