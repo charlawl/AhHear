@@ -37,7 +37,12 @@ public class BandBrowse extends AppCompatActivity {
     private static BandListItem listItem;
     ArrayList<Band> result = new ArrayList<>();
 
-//  background task to connect to the API as cannot connect to the internet on the main thread - using the AsyncTask class
+
+    /**
+     * Class for downloading information about bands from the API in the background
+     background task to connect to the API as cannot connect to the internet on the main thread - using the AsyncTask class
+     */
+
     private class DownloadBandsTask extends AsyncTask<URL, Integer, ArrayList<Band>> {
         private Activity activity;
         public DownloadBandsTask(Activity activity){
@@ -62,11 +67,12 @@ public class BandBrowse extends AppCompatActivity {
                         sb.append(line).append('\n');
                     }
 
-//                  populating the number of samples, number of gigs etc. by looping through the JSON from the API
+                    // Loop through our JSON results, create band objects & add to arraylist
                     try {
                         JSONArray arr = new JSONArray(sb.toString());
                         for(int i = 0; i < arr.length(); i++){
                             JSONObject band = arr.getJSONObject(i);
+                            // Set default value of 0 if entry is empty
                             int numGigs = band.isNull("num_gigs")? 0: band.getInt("num_gigs");
                             int numSamples = band.isNull("num_samples")? 0: band.getInt("num_samples");
                             int avgSamples = band.isNull("avg_samples")? 0: band.getInt("avg_samples");
@@ -92,6 +98,11 @@ public class BandBrowse extends AppCompatActivity {
             return result;
         }
 
+
+        /**
+         * Display confirmation toast to user after band info is downloaded & set listview item to band info
+         * @param result arraylist of band information to be put in listview
+         */
         protected void onPostExecute(ArrayList<Band> result) {
 //            Toast toast = Toast.makeText(getApplicationContext(), "Bands downloaded", Toast.LENGTH_SHORT);
 //            toast.show();
@@ -106,11 +117,13 @@ public class BandBrowse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.band_browse);
 
+        // Create a listview object to display our band information
         listView = (ListView) findViewById(R.id.bandsList);
         DownloadBandsTask downloadBandsTask = new DownloadBandsTask(this);
 
 
         try {
+            // Download band information from the API
             downloadBandsTask.execute(
                     new URL("http", "gavs.work", 8000, "bands_list"));
 
@@ -121,6 +134,7 @@ public class BandBrowse extends AppCompatActivity {
         }
 
         // Code to open the band score page after clicking one of the list view items
+        // Include information in the intent to display band info
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
