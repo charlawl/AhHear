@@ -33,6 +33,9 @@ public class VenueBrowse extends AppCompatActivity {
     private static VenueListItem listItem;
     ArrayList<Venue> result = new ArrayList<>();
 
+    /**
+     * Class for downloading information about venues from the API in the background
+     */
     class DownloadVenuesTask extends AsyncTask<URL, Integer, ArrayList<Venue>> {
         private Activity activity;
 
@@ -57,10 +60,12 @@ public class VenueBrowse extends AppCompatActivity {
                         sb.append(line).append('\n');
                     }
 
+                    // Loop through our JSON results, create venue objects & add to arraylist
                     try {
                         JSONArray arr = new JSONArray(sb.toString());
                         for (int i = 0; i < arr.length(); i++) {
                             JSONObject venue = arr.getJSONObject(i);
+                            // Set default value of 0 if entry is empty
                             int numGigs = venue.isNull("num_gigs")? 0: venue.getInt("num_gigs");
                             int numSamples = venue.isNull("num_samples")? 0: venue.getInt("num_samples");
                             int avgSamples = venue.isNull("avg_samples")? 0: venue.getInt("avg_samples");
@@ -91,6 +96,10 @@ public class VenueBrowse extends AppCompatActivity {
             return result;
         }
 
+        /**
+         * Display confirmation toast to user after band info is downloaded & set listview item to band info
+         * @param result arraylist of band information to be put in listview
+         */
         protected void onPostExecute(ArrayList<Venue> result) {
 //            Toast toast = Toast.makeText(getApplicationContext(), "Venues downloaded", Toast.LENGTH_SHORT);
 //            toast.show();
@@ -105,10 +114,12 @@ public class VenueBrowse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venue_browse);
 
+        // Create a listview object to display our venue information
         listView = (ListView) findViewById(R.id.venuesList);
         DownloadVenuesTask downloadVenuesTask = new DownloadVenuesTask(this);
 
         try {
+            // Download band information from the API
             downloadVenuesTask.execute(
                     new URL("http", "gavs.work", 8000, "venues_list"));
 
@@ -119,6 +130,7 @@ public class VenueBrowse extends AppCompatActivity {
         }
 
         // Code to open the venue score page after clicking one of the list view items
+        // Include information in the intent to display venue info
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
