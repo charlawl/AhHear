@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, VenueBrowse.class));
                 return true;
             case R.id.menu_record_btn:
-                startActivity(new Intent(this, PickLocation.class));
+                startActivity(new Intent(this, GigBrowse.class));
                 return true;
             case R.id.menu_recordings_btn:
                 startActivity(new Intent(this, MyRecordings.class));
